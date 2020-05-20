@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLayer.Services.AuthorService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,17 @@ namespace BookStoreAdmin.Controllers
 {
     public class AuthorController : Controller
     {
+        private readonly IAuthorService _authorService;
+
+        public AuthorController(IAuthorService authorService)
+        {
+            _authorService = authorService;
+        }
         // GET: Author
         public ActionResult Index()
         {
-            return View();
+            var authorList = _authorService.GetAllAuthors();
+            return View(authorList);
         }
 
         [HttpGet]
