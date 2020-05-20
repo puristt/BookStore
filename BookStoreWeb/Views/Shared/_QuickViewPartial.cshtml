@@ -1,0 +1,38 @@
+﻿@using Entities.WebViewModels.Book
+
+@model BookListModel
+
+
+
+<div class="modal-product">
+    <div class="product-images">
+        <div class="main-image images">
+            @if (string.IsNullOrEmpty(Model.Url))
+            {
+                <img alt="" src="~/Images/no_image150x207.jpg" width="250" height="350">
+            }
+            else
+            {
+                <img alt="" src="@Url.Content(Model.Url)" width="250" height="350">
+            }
+        </div>
+    </div>
+    <div class="product-info">
+        <h1>@Model.Title</h1>
+        <div class="price-box">
+            <p class="s-price"><span class="special-price"><span class="amount">₺ @Model.Price</span></span></p>
+        </div>
+        <a href="product-details.html" class="see-all">See all features</a>
+        <div class="quick-add-to-cart">
+            <form method="post" class="cart">
+                <div class="numbers-row">
+                    <input type="number" id="french-hens" value="3">
+                </div>
+                <button class="single_add_to_cart_button" type="submit">Add to cart</button>
+            </form>
+        </div>
+        <div class="quick-desc">
+           @Model.Description
+        </div>
+    </div><!-- .product-info -->
+</div>

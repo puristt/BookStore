@@ -1,0 +1,29 @@
+﻿@using Entities.WebViewModels.Category
+
+@model IEnumerable<CategoryListModel>
+
+
+
+
+<aside class="widget widget-categories ">
+    <h2 class="sidebar-title text-center">CATEGORY</h2>
+    <ul class="sidebar-menu scrollable">
+        <li>
+            <a href="/Book/Shop">
+                <i class="fa fa-angle-double-right"></i>
+                ALL CATEGORIES
+                
+            </a>
+        </li>
+        @foreach (var item in Model)
+        {
+            <li>
+                <a href="/Book/Category/@item.Id" title="@item.Title">
+                    <i class="fa fa-angle-double-right"></i>
+                    <label title="@item.Title"></label>@item.Title
+                    <span>@item.BookCount</span>
+                </a>
+            </li>
+        }
+    </ul>
+</aside>

@@ -1,0 +1,14 @@
+﻿using Entities.DataModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataAccessLayer.Repository.ReviewRepository
+{
+    public interface IReviewRepository
+    {
+        IEnumerable<Review> GetBookReviews(int id);
+    }
+}
