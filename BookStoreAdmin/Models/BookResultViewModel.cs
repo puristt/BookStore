@@ -11,8 +11,8 @@ namespace BookStoreAdmin.Models
         public BookResultViewModel()
         {
             SearchModel = new SearchModel();
-            Books = new List<BookListModel>();
-            FilterModel = new BookFilterModel();
+            Books = new List<FilteredBookListModel>();
+            FilterValues = new BookFilterModel();
         }
         /// <summary>
         /// Seçilen filtre değerlerini tutacak ve veritabanına gönderilecek olan property
@@ -22,11 +22,11 @@ namespace BookStoreAdmin.Models
         /// <summary>
         /// Filtre satırlarının içindeki verileri dolduracak property
         /// </summary>
-        public BookFilterModel FilterModel { get; set; }
+        public BookFilterModel FilterValues { get; set; }
         /// <summary>
         /// Partial view içinde listelenecek kitaplar
         /// </summary>
-        public IEnumerable<BookListModel> Books { get; set; }
+        public IEnumerable<FilteredBookListModel> Books { get; set; }
 
     }
 }

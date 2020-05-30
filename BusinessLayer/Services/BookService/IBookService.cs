@@ -1,4 +1,5 @@
-﻿using Entities.DataModels;
+﻿using Entities.AdminViewModels.Book;
+using Entities.DataModels;
 using Entities.WebViewModels.Book;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace BusinessLayer.Services.BookService
         IEnumerable<BookListModel> GetBookListForShopPageByCategoryId(int id);
         BookListModel GetQuickViewById(int id);
         BookDetailModel GetBookDetail(int id);
+        IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel);
     }
 }

@@ -19,13 +19,13 @@
         <section class="panel">
             <div class="panel-body">
 
-                <div class="form" style="padding-bottom: 15px;">
+                <div class="form" id="filterForm" style="padding-bottom: 15px;">
                     <form class="form-validate form-horizontal" id="filter-form" method="post">
                         <div class="form-group ">
                             @Html.LabelFor(model => model.SearchModel.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(model => model.SearchModel.StartDate, "{0:dd-MM-yyyy}", htmlAttributes:
-                               new { @type = "date", @class = "datepicker form-control", name = "YapildigiYil", placeholder = "Başlangıç Tarihi", value = DateTime.Now.ToString("dd-MM-yyyy") })
+                               new { id = "start-date", @type = "date", @class = "datepicker form-control", name = "YapildigiYil", placeholder = "Başlangıç Tarihi", value = DateTime.Now.ToString("dd-MM-yyyy") })
                             </div>
                         </div>
                         <div class="form-group ">
@@ -34,39 +34,39 @@
                                 @*[DataType(DataType.Date)]
                                     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]*@
                                 @Html.TextBoxFor(model => model.SearchModel.EndDate, "{0:dd-MM-yyyy}", htmlAttributes:
-                               new { @type = "date", @class = "datepicker form-control", name = "YapildigiYil", placeholder = "Bitiş tarihi", value = DateTime.Now.ToString("dd-MM-yyyy") })
+                               new { id = "end-date", @type = "date", @class = "datepicker form-control", name = "YapildigiYil", placeholder = "Bitiş tarihi", value = DateTime.Now.ToString("dd-MM-yyyy") })
                                 @*<input class="datepicker form-control" data-val="true" data-val-date="The field Proje Tarihi must be a date." id="YapildigiYil" name="YapildigiYil" placeholder="Proje Tarihi" type="date" value="">*@
                             </div>
                         </div>
                         <div class="form-group ">
-                            @Html.LabelFor(model => model.SearchModel.CategoryIdArray, htmlAttributes: new { @class = "control-label col-lg-2" })
+                            @Html.LabelFor(model => model.SearchModel.CategoryIds, htmlAttributes: new { @class = "control-label col-lg-2" })
                             <div class="col-lg-8">
-                                @Html.ListBoxFor(model => model.SearchModel.CategoryIdArray, Model.FilterModel.Categories, new { id = "multiSelectDropDown", multiple = "multiple", @class = "form-control" })
+                                @Html.ListBoxFor(model => model.SearchModel.CategoryIds, Model.FilterValues.Categories, new { id = "multiSelectDropDownCategory", multiple = "multiple", @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group ">
-                            @Html.LabelFor(model => model.SearchModel.PublisherId, htmlAttributes: new { @class = "control-label col-lg-2" })
+                            @Html.LabelFor(model => model.SearchModel.PublisherIds, htmlAttributes: new { @class = "control-label col-lg-2" })
                             <div class="col-lg-8">
-                                @Html.DropDownListFor(model => model.SearchModel.PublisherId, Model.FilterModel.Publishers, new { id = "publisherDropDown", @class = "form-control" })
+                                @Html.ListBoxFor(model => model.SearchModel.PublisherIds, Model.FilterValues.Publishers, new { id = "multiSelectDropDownPublisher", multiple = "multiple", @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group ">
-                            @Html.LabelFor(model => model.SearchModel.AuthorId, htmlAttributes: new { @class = "control-label col-lg-2" })
+                            @Html.LabelFor(model => model.SearchModel.AuthorIds, htmlAttributes: new { @class = "control-label col-lg-2" })
                             <div class="col-lg-8">
-                                @Html.DropDownListFor(model => model.SearchModel.AuthorId, Model.FilterModel.Authors, new { id = "authorDropDown", @class = "form-control" })
+                                @Html.ListBoxFor(model => model.SearchModel.AuthorIds, Model.FilterValues.Authors, new { id = "multiSelectDropDownAuthor", multiple = "multiple", @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group ">
                             <label for="ccomment" class="control-label col-lg-2">Kitap Adı</label>
                             <div class="col-lg-6">
-                                <input class="form-control" type="text" placeholder="Kitap adı ile filtrele"/>
+                                <input class="form-control" type="text" id="book-val" placeholder="Kitap adı ile filtrele" />
                             </div>
                         </div>
 
 
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-8">
-                                <button class="btn btn-warning" type="submit" style="color: rgb(66, 64, 64);"><b>Filtrele</b></button>
+                                <button class="btn btn-warning" id="btnFilter" type="button" style="color: rgb(66, 64, 64);"><b>Filtrele</b></button>
 
                             </div>
                         </div>
@@ -80,9 +80,9 @@
                     <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i> Kitap ekle</a>
                 </div>
 
-                <div>
+                <div id="bookList">
 
-                    @Html.Partial("_BookListPartial")
+                    @Html.Partial("_BookListPartial", Model.Books)
 
                 </div>
             </div>
@@ -95,13 +95,6 @@
 
 @section scripts{
 
-
-    <script>
-        $(function () {
-            $("#multiSelectDropDown").chosen();
-            $("#publisherDropDown").chosen();
-            $("#authorDropDown").chosen();
-        });
-    </script>
+    <script src="~/Scripts/FilterScripts.js"></script>
 
 }

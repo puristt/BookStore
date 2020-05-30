@@ -11,8 +11,8 @@ namespace Entities.AdminViewModels.Book
     public class BookFilterModel
     {
         public MultiSelectList Categories { get; set; }
-        public SelectList Publishers { get; set; }
-        public SelectList Authors { get; set; }
+        public MultiSelectList Publishers { get; set; }
+        public MultiSelectList Authors { get; set; }
 
     }
 }

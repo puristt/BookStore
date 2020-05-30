@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImagesGeneral", "ImagesGeneral", "{C6D72AD4-F6ED-4C7C-A813-E586B83291F8}"
 	ProjectSection(SolutionItems) = preProject
 		BookStoreWeb\Images\book_2-1.jpg = BookStoreWeb\Images\book_2-1.jpg
+		BookStoreWeb\Images\no_image150x207.jpg = BookStoreWeb\Images\no_image150x207.jpg
 	EndProjectSection
 EndProject
 Global

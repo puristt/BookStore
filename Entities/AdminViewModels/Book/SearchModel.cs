@@ -20,15 +20,15 @@ namespace Entities.AdminViewModels.Book
         /// Filtrelenirken aranacak kategoriler. Bir kitap birden fazla kategori içinde olabilir.
         /// array olarak tutulduktan sonra ',' ile ayırarak tek satır bir string verisi haline getirilecek.
         /// </summary>
-        public string[] CategoryIdArray { get; set; }
+        public string[] CategoryIds { get; set; }
         /// <summary>
         /// Filtrede aranacak yayınevi
         /// </summary>
-        public int PublisherId { get; set; }
+        public string[] PublisherIds { get; set; }
         /// <summary>
         /// Filtrede aranacak yazar
         /// </summary>
-        public int AuthorId { get; set; }
+        public string[] AuthorIds { get; set; }
         /// <summary>
         /// Filtrede aranacak kitap adı
         /// </summary>

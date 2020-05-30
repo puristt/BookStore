@@ -28,7 +28,8 @@ namespace BookStoreAdmin.Controllers
         // GET: Book
         public ActionResult Index(BookResultViewModel model)
         {
-            model.FilterModel = PrepareFilterModel(model.FilterModel);
+            model.FilterValues = PrepareFilterModel(model.FilterValues);
+            model.Books = _bookService.GetFilteredBookList(model.SearchModel);
             return View(model);
         }
 
@@ -44,13 +45,22 @@ namespace BookStoreAdmin.Controllers
             return View();
         }
 
+        public ActionResult LoadFilteredResults(SearchModel filter)
+        {
+            var model = _bookService.GetFilteredBookList(filter);
+
+            return PartialView("_BookListPartial",model);
+        }
+
         public BookFilterModel PrepareFilterModel(BookFilterModel model)
         {
-            model.Authors = new SelectList(_authorService.GetAllAuthors(), "Id", "Name");
+            model.Authors = new MultiSelectList(_authorService.GetAllAuthors(), "Id", "Name",null);
             model.Categories = new MultiSelectList(_categoryService.GetAllCategories(), "Id", "Title");
-            model.Publishers = new SelectList(_publisherService.GetAllPublishers(), "Id", "Name");
+            model.Publishers = new MultiSelectList(_publisherService.GetAllPublishers(), "Id", "Name",null);
 
             return model;
         }
+
+
     }
 }

@@ -1,9 +1,11 @@
 ﻿using DataAccessLayer.DatabaseManager;
 using DataAccessLayer.Repository.BookRepository;
+using Entities.AdminViewModels.Book;
 using Entities.DataModels;
 using Entities.WebViewModels.Book;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +44,50 @@ namespace BusinessLayer.Services.BookService
         {
             var parameters = new { Id = id };
             return _dapperRepository.LoadData<BookDetailModel>("spGetBookDetail", parameters).FirstOrDefault();
+        }
+
+        public IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel)
+        {
+         
+            var parameters = GetDynamicSearchModel(searchModel);
+
+            var bookList = _dapperRepository.LoadData<FilteredBookListModel>("spFilteredBookResults", (object)parameters);
+
+            return bookList;
+        }
+
+
+
+
+        public dynamic GetDynamicSearchModel(SearchModel model)
+        {
+            string categoryIds = "";
+            string publisherIds = "";
+            string authorIds = "";
+
+            if(model.CategoryIds != null)
+            {
+                categoryIds = string.Join(",", model.CategoryIds);
+            }
+            if(model.PublisherIds != null)
+            {
+                publisherIds = string.Join(",", model.PublisherIds);
+            }
+            if(model.AuthorIds != null)
+            {
+                authorIds = string.Join(",", model.AuthorIds);
+            }
+
+            dynamic parameter = new ExpandoObject();
+
+            parameter.StartDate = model.StartDate;
+            parameter.EndDate = model.EndDate;
+            parameter.PublisherIds = publisherIds;
+            parameter.AuthorIds = authorIds;
+            parameter.CategoryIds = categoryIds;
+            parameter.BookName = model.BookName ?? "";
+
+            return parameter;
         }
     }
 }
