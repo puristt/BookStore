@@ -18,6 +18,24 @@ namespace DataAccessLayer.Repository.BookRepository
             _repository = repository;
         }
 
+        public int CountByAuthorId(int authorId)
+        {
+            var parameters = new { AuthorId = authorId };
+            return _repository.Count(parameters);
+        }
+
+        public int CountByCategoryId(int categoryId)
+        {
+            var parameters = new { CategoryId = categoryId };
+            return _repository.Count("spBookCountByCategoryId", parameters);
+        }
+
+        public int CountByPublisherId(int publisherId)
+        {
+            var parameters = new { PublisherId = publisherId };
+            return _repository.Count(parameters);
+        }
+
         public IEnumerable<Book> GetAll()
         {
             throw new NotImplementedException();

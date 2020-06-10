@@ -676,7 +676,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\64px-Warning.svg.png" />
+    <Content Include="Images\delete-icon.jpg" />
     <Content Include="Images\no_image150x207.jpg" />
+    <Content Include="Images\success-icon.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\AdminTemplate\assets\chart-master\.gitignore" />
@@ -735,6 +738,7 @@
     <Content Include="Content\AdminTemplate\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\AdminTemplate\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\AdminTemplate\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="App_Code\Bootstrap.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\FilterScripts.js" />
@@ -786,11 +790,14 @@
     <Content Include="Views\Author\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Publisher\Index.cshtml" />
-    <Content Include="Views\Category\Detail.cshtml" />
     <Content Include="Views\Book\Detail.cshtml" />
-    <Content Include="Views\Publisher\Detail.cshtml" />
-    <Content Include="Views\Author\Detail.cshtml" />
     <Content Include="Views\Book\_BookListPartial.cshtml" />
+    <Content Include="Views\Category\_CategoryListPartial.cshtml" />
+    <Content Include="Views\Category\Detail.cshtml" />
+    <Content Include="Views\Publisher\Detail.cshtml" />
+    <Content Include="Views\Publisher\_PublisherListPartial.cshtml" />
+    <Content Include="Views\Author\_AuthorListPartial.cshtml" />
+    <Content Include="Views\Author\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,5 +13,11 @@ namespace DataAccessLayer.Repository.CategoryRepository
         IEnumerable<Category> GetAll();
         IEnumerable<Category> GetAllByBookId(int id);
         IEnumerable<CategoryListModel> GetCategoryListModel();
+        Category GetById(int id);
+        int Save(Category entity);
+        Category CheckByName(string categoryName);
+        IEnumerable<Category> SearchByName(string name);
+        int Delete(int id);
+        
     }
 }

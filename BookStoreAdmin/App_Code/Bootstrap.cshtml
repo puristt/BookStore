@@ -1,0 +1,52 @@
+﻿
+
+@helper SuccessModalPopUp(string id = "successModal", string title = "Success Modal")
+{
+
+    <div class="modal fade bd-example-modal-lg" id="@id" tabindex="-1" role="dialog" aria-labelledby="@(id + "_label")" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="@(id + "_header")">
+                    <div style="text-align:center;">
+                        <img src="~/Images/success-icon.png" />
+                    </div>
+                </div>
+                <div class="modal-body" id="@(id + "_body")">
+                    <h2>
+                        <b> Silme işlemi başarıyla gerçekleştirildi!</b>
+                    </h2>
+                </div>
+                <div class="modal-footer" id="@(id + "_footer")">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@helper ErrorModalPopUp(string id = "errorModal", string title = "Error Modal")
+{
+
+    <div class="modal fade bd-example-modal-lg" id="@id" tabindex="-1" role="dialog" aria-labelledby="@(id + "_label")" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="@(id + "_header")">
+                    <div style="text-align:center;">
+                        <img src="~/Images/64px-Warning.svg.png" />
+                    </div>
+                </div>
+                <div class="modal-body" id="@(id + "_body")">
+                    <p class="error-message">
+
+                    </p>
+                </div>
+                <div class="modal-footer" id="@(id + "_footer")">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+

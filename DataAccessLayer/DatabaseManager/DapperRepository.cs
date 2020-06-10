@@ -60,20 +60,32 @@ namespace DataAccessLayer.DatabaseManager
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 var row = connection.Execute(storedProcedure,
-                    parameters, commandType: CommandType.Text);
+                    parameters, commandType: CommandType.StoredProcedure);
 
                 return row;
             }
         }
 
 
-        public int Count(string storedProcedure,object predicates = null)
+        public int Count(object predicates = null)
         {
             string connectionString = GetConnectionString();
 
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
-                int count = (int)connection.ExecuteScalar(storedProcedure, predicates, null, null, CommandType.StoredProcedure);
+                int count = connection.Count<T>(predicates);
+
+                return count;
+            }
+        }
+
+        public int Count(string storedProcedure, object parameters = null)
+        {
+            string connectionString = GetConnectionString();
+
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
+                int count = connection.ExecuteScalar<int>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
 
                 return count;
             }

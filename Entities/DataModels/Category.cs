@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace Entities.DataModels
     {
         public int Id { get; set; }
 
-        //[Required]
+        [Required(ErrorMessage = "Bu alan zorunludur.")]
         public string Title { get; set; }
         //public DateTime CreatedDate { get; set; }
 

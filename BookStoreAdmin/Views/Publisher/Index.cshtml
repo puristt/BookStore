@@ -12,7 +12,6 @@
         </ol>
     </div>
 </div>
-<!-- Form validations -->
 <div class="row">
     <div class="col-lg-12">
         <section class="panel">
@@ -20,37 +19,107 @@
                 <div class="col-lg-offset-2 col-lg-9 text-right">
                     <a class="btn btn-primary" href="@Url.Action("Detail/")"><i class="icon_plus_alt2"></i> Yayınevi ekle</a>
                 </div>
-                <table class="table table-striped table-advance table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                <input class="form-control" type="text" placeholder="Filter by Ad" data-index="0">
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th><i class="icon_calendar"></i> Yayınevi Adı</th>
-                            <th>Aksiyonlar</th>
-                        </tr>
+                <div class="form" style="padding:50px 0px 50px 0px;">
+                    <form class="form-validate form-horizontal" method="get">
+                        <div class="input-group col-md-5">
+                            @Html.TextBox("publisherName", null, htmlAttributes: new { @class = "form-control", placeholder = "Yayınevi Adı ile ara.." })
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" id="btnFilterPublisher" type="button" style="color: rgb(66, 64, 64);"><b>Filtrele</b></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
 
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.Name</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a id="editButton(@item.Id)" class="btn btn-warning" href="@Url.Action("Detail/" + item.Id)" style="color: rgb(66, 64, 64);"><i class="icon_plus_alt2"></i> <b> Düzenle</b></a>
-                                        <a id="deleteButton(@item.Id)" class="btn btn-danger" href="#"><i class="icon_close_alt2"></i>  Sil</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
+                <div id="publisherList">
 
-                    </tbody>
-                </table>
+                    @Html.Partial("_PublisherListPartial", Model)
+
+                </div>
+
 
             </div>
         </section>
     </div>
 </div>
+
+<div class="modal fade bd-example-modal-lg" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModal_label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="confirmModal_header">
+                <div style="text-align:center;">
+                    <img src="~/Images/delete-icon.jpg" />
+                </div>
+            </div>
+            <div class="modal-body" id="confirmModal_body">
+                <h2>
+                    <b> Silmek istediğinize emin misiniz ?</b>
+                </h2>
+            </div>
+            <div class="modal-footer" id="confirmModal_body">
+                <button type="button" class="btn btn-danger" onclick="DeletePublisher()">Sil</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Bootstrap.SuccessModalPopUp()
+@Bootstrap.ErrorModalPopUp()
+
+@section scripts{
+    <script>
+
+        var itemId = -1;
+
+        $(function () {
+             $("#authorName").keypress(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    $("#btnFilterPublisher").click();
+                }
+            });
+            $("#btnFilterPublisher").click(function () {
+
+                var publisherName = $("#publisherName").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Publisher/LoadPublisherList",
+                    data: { searchText: publisherName },
+                    success: function (response) {
+                        $("#publisherList").html(response);
+                    }
+                });
+            });
+            $('#confirmModal').on('show.bs.modal',
+                function (e) {
+
+                    var btn = $(e.relatedTarget);
+
+                    itemId = btn.data("publisher-id");
+                });
+
+        });
+
+        var DeletePublisher = function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/Publisher/Delete",
+                data: { "id": itemId }
+            }).done(function (data) {
+                $('#confirmModal').modal('hide');
+                if (data.result) {
+                    $('#successModal').modal('show');
+                    $("#publisherList").load("/Publisher/LoadPublisherList");
+                } else {
+                    $('#errorModal_body').remove('.error-message');
+                    $('#errorModal_body').append("<p class='error-message'>Bu Yayınevine bağlı ürün bulunmaktadır. Silmek için öncelikle bağlı olan ürünleri siliniz!</p>");
+                    $('#errorModal').modal('show');
+                }
+
+            });
+        }
+    </script>
+
+}

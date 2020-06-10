@@ -14,5 +14,8 @@ namespace DataAccessLayer.Repository.BookRepository
         Book GetQuickViewById(int id);
         IEnumerable<BookListModel> GetBookList();
         IEnumerable<BookListModel> GetBookListByCategoryId(int id);
+        int CountByPublisherId(int publisherId);
+        int CountByAuthorId(int authorId);
+        int CountByCategoryId(int categoryId);
     }
 }

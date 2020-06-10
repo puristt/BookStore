@@ -18,18 +18,18 @@
     <div class="col-lg-12">
         <section class="panel">
             <div class="panel-body">
-
                 <div class="form" id="filterForm" style="padding-bottom: 15px;">
-                    <form class="form-validate form-horizontal" id="filter-form" method="post">
+                    @using (Html.BeginForm("Index", "Book", FormMethod.Get, new { @class = "form-validate form-horizontal", id = "filter-form" }))
+                    {
                         <div class="form-group ">
-                            @Html.LabelFor(model => model.SearchModel.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.SearchModel.StartDate, "Yayınlanma Tarihi(Başlangıç)", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-lg-8">
                                 @Html.TextBoxFor(model => model.SearchModel.StartDate, "{0:dd-MM-yyyy}", htmlAttributes:
                                new { id = "start-date", @type = "date", @class = "datepicker form-control", name = "YapildigiYil", placeholder = "Başlangıç Tarihi", value = DateTime.Now.ToString("dd-MM-yyyy") })
                             </div>
                         </div>
                         <div class="form-group ">
-                            @Html.LabelFor(model => model.SearchModel.EndDate, htmlAttributes: new { @class = "control-label col-lg-2" })
+                            @Html.LabelFor(model => model.SearchModel.EndDate, "Yayınlanma Tarihi(Bitiş)", htmlAttributes: new { @class = "control-label col-lg-2" })
                             <div class="col-lg-8">
                                 @*[DataType(DataType.Date)]
                                     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]*@
@@ -39,48 +39,44 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            @Html.LabelFor(model => model.SearchModel.CategoryIds, htmlAttributes: new { @class = "control-label col-lg-2" })
+                            @Html.LabelFor(model => model.SearchModel.CategoryIds, "Kategori", htmlAttributes: new { @class = "control-label col-lg-2" })
                             <div class="col-lg-8">
                                 @Html.ListBoxFor(model => model.SearchModel.CategoryIds, Model.FilterValues.Categories, new { id = "multiSelectDropDownCategory", multiple = "multiple", @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group ">
-                            @Html.LabelFor(model => model.SearchModel.PublisherIds, htmlAttributes: new { @class = "control-label col-lg-2" })
+                            @Html.LabelFor(model => model.SearchModel.PublisherIds, "Yayınevi", htmlAttributes: new { @class = "control-label col-lg-2" })
                             <div class="col-lg-8">
                                 @Html.ListBoxFor(model => model.SearchModel.PublisherIds, Model.FilterValues.Publishers, new { id = "multiSelectDropDownPublisher", multiple = "multiple", @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group ">
-                            @Html.LabelFor(model => model.SearchModel.AuthorIds, htmlAttributes: new { @class = "control-label col-lg-2" })
+                            @Html.LabelFor(model => model.SearchModel.AuthorIds, "Yazar", htmlAttributes: new { @class = "control-label col-lg-2" })
                             <div class="col-lg-8">
                                 @Html.ListBoxFor(model => model.SearchModel.AuthorIds, Model.FilterValues.Authors, new { id = "multiSelectDropDownAuthor", multiple = "multiple", @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group ">
-                            <label for="ccomment" class="control-label col-lg-2">Kitap Adı</label>
-                            <div class="col-lg-6">
+                            @Html.LabelFor(model => model.SearchModel.BookName, "Kitap Adı", htmlAttributes: new { @class = "control-label col-lg-2" })
+                            <div class="col-lg-4">
                                 <input class="form-control" type="text" id="book-val" placeholder="Kitap adı ile filtrele" />
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-8">
-                                <button class="btn btn-warning" id="btnFilter" type="button" style="color: rgb(66, 64, 64);"><b>Filtrele</b></button>
-
+                                <button class="btn btn-warning" id="btnBookFilter" type="button" style="color: rgb(66, 64, 64);"><b>Filtrele</b></button>
                             </div>
                         </div>
-                    </form>
+                    }
+
                 </div>
 
-                @*<div>
-                        @Html.ListBoxFor(model => model.CategoryIds, new MultiSelectList(Model.CategoryCollection,"Id","Title"),new { id = "multiSelectDropDown", multiple = "multiple"})
-                    </div>*@
                 <div class="col-lg-offset-2 col-lg-9 text-right" style="padding-bottom:10px;">
                     <a class="btn btn-primary" href="#"><i class="icon_plus_alt2"></i> Kitap ekle</a>
                 </div>
 
-                <div id="bookList">
+                <div id="bookList" style="padding: 0 50px 150px 50px;">
 
                     @Html.Partial("_BookListPartial", Model.Books)
 

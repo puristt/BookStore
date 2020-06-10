@@ -5,9 +5,7 @@ $(function () {
     $("#multiSelectDropDownPublisher").chosen();
     $("#multiSelectDropDownAuthor").chosen();
 
-
-
-    $("#btnFilter").on("click", function () {
+    $("#btnBookFilter").on("click", function () {
 
         var model = {
             StartDate: $("#start-date").val(),
@@ -26,11 +24,8 @@ $(function () {
             data: model,
             success: function (response) {
                 $("#bookList").html(response);
-                console.log("basarılı");
             }
         });
-
-
 
     });
 

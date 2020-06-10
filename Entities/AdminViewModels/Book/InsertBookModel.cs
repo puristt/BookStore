@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.DataModels
+namespace Entities.AdminViewModels.Book
 {
-    public class Book
+    public class InsertBookModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -19,12 +19,7 @@ namespace Entities.DataModels
         public DateTime InsertedAt { get; set; }
         public int PublisherId { get; set; }
         public int AuthorId { get; set; }
-
-        public List<BookImage> BookImages { get; set; }
-        public Publisher Publisher { get; set; } // Publisher Table
-        public List<Category> Categories { get; set; } // Category Table
-        public List<Review> Reviews { get; set; } // Review Table
-        public List<Book> FavoriteBooks { get; set; } // UserFavoriteTable(many to many table)
-
+        public string[] CategoryIds { get; set; }
+        
     }
 }

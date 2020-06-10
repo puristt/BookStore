@@ -10,5 +10,10 @@ namespace DataAccessLayer.Repository.PublisherRepository
     public interface IPublisherRepository
     {
         IEnumerable<Publisher> GetAll();
+        IEnumerable<Publisher> SearchByName(string publisherName);
+        Publisher GetById(int id);
+        Publisher CheckByName(string name);
+        int Save(Publisher entity);
+        int Delete(int id);
     }
 }

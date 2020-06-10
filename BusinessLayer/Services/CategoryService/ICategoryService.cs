@@ -1,4 +1,5 @@
-﻿using Entities.DataModels;
+﻿using BusinessLayer.ErrorHelper;
+using Entities.DataModels;
 using Entities.WebViewModels.Category;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,9 @@ namespace BusinessLayer.Services.CategoryService
         IEnumerable<Category> GetAllCategories();
         IEnumerable<CategoryListModel> GetCategoriesWithBookCount();
         IEnumerable<Category> GetRelatedCategoriesByBookId(int id);
+        Category GetCategoryById(int id);
+        GenericResults<Category> SaveModel(Category model);
+        IEnumerable<Category> SearchCategoryByName(string categoryName);
+        bool DeleteCategory(int id);
     }
 }

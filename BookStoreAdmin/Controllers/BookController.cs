@@ -45,7 +45,7 @@ namespace BookStoreAdmin.Controllers
             return View();
         }
 
-        public ActionResult LoadFilteredResults(SearchModel filter)
+        public PartialViewResult LoadFilteredResults(SearchModel filter)
         {
             var model = _bookService.GetFilteredBookList(filter);
 
