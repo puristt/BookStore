@@ -35,7 +35,7 @@
     <!-- owl.carousel css -->
     <link rel="stylesheet" href="~/Content/Template/css/owl.carousel.css">
     <!-- style css -->
-    <link rel="stylesheet" href="~/Content/Template/style.css">
+    <link href="~/Content/Template/style.css" rel="stylesheet" />
     <!-- responsive css -->
     <link rel="stylesheet" href="~/Content/Template/css/responsive.css">
     <!-- modernizr css -->
@@ -128,10 +128,10 @@
                     <div class="mainmenu text-center">
                         <nav>
                             <ul id="nav">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="shop.html">Shop</a></li>
-                                <li><a href="shop.html">Authors</a></li>
-                                <li><a href="about.html">Publishers</a></li>
+                                <li><a href="index.html">Anasayfa</a></li>
+                                <li><a href="@Url.Action("Shop","Book")">Kitaplar</a></li>
+                                <li><a href="shop.html">Yazarlar</a></li>
+                                <li><a href="@Url.Action("Index","Publisher")">Yayınevleri</a></li>
                                 <li>
                                     <a href="#">pages</a>
                                     <ul class="sub-menu">

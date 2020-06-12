@@ -15,5 +15,6 @@ namespace BusinessLayer.Services.PublisherService
         Publisher GetPublisherById(int id);
         GenericResults<Publisher> SaveModel(Publisher model);
         bool DeletePublisher(int id);
+        IEnumerable<Publisher> SearchPublishersAlphabetically(string letter);
     }
 }

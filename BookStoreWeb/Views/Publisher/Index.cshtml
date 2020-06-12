@@ -1,0 +1,132 @@
+﻿@using Entities.DataModels
+@using BookStoreWeb.Models
+
+@model PublisherPageViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="main-content-overlay">
+    <section class="full-content">
+        <div class="user-pages">
+            <div class="categories-path" style="background: #f1f4ed;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ol class="breadcrumb">
+                                <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                                <li><i class="icon_document_alt"></i>Forms</li>
+                                <li><i class="fa fa-files-o"></i>Form Validation</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-page-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <h2 style="text-align:left;">Yayınevleri</h2>
+                        </div>
+                        <div class="input-group col-md-6">
+                            @Html.TextBox("publisherName", null, htmlAttributes: new { @class = "form-control", placeholder = "Yayınevi Adı ile ara.." })
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning" id="btnSearchPublisher" type="button" style="color: rgb(66, 64, 64);"><b>Ara</b></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="index" style="text-align:center;">
+                        <div class="container">
+                            <nav>
+                                <ul class="pagination alphabet-list">
+                                    @foreach (var link in Model.Alphabet)
+                                    {
+                                        <li class="test">
+                                            <a href="#" id="@link" onclick="AlphabetSearch('#@link')">@link</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="container" id="publisherPageContent" style="padding-bottom:50px;">
+
+            @Html.Partial("_PublisherListPartial", Model.Publishers)
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+    $(function () {
+        var selector = '.alphabet-list li';
+
+        
+        $(".alphabet-list li:first-child").addClass('active');
+
+        $(selector).on('click', function () {
+            $(selector).removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $("#publisherName").keypress(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $("#btnFilterPublisher").click();
+            }
+        });
+        $("#btnSearchPublisher").click(function () {
+
+            $(selector).removeClass('active');
+            var publisherName = $("#publisherName").val();
+
+            console.log(publisherName);
+            if (!publisherName) {
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Publisher/GetSearchedResult",
+                data: { searchText: publisherName },
+                success: function (response) {
+                    $("#publisherPageContent").html(response);
+                }
+            });
+        });
+
+    });
+
+    function AlphabetSearch(val) {
+
+        var letter = $(val).text();
+        console.log(letter);
+
+        $.ajax({
+            method: "GET",
+            url: "/Publisher/GetAlphabeticResult",
+            data: { "letter": letter },
+            success: function (response) {
+                $("#publisherPageContent").html(response);
+            }
+        });
+    }
+
+
+
+
+</script>
+
+

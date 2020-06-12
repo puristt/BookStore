@@ -15,5 +15,6 @@ namespace DataAccessLayer.Repository.PublisherRepository
         Publisher CheckByName(string name);
         int Save(Publisher entity);
         int Delete(int id);
+        IEnumerable<Publisher> SearchAlphabetically(string letter);
     }
 }

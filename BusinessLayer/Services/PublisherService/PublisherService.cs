@@ -81,5 +81,10 @@ namespace BusinessLayer.Services.PublisherService
             return true;
             
         }
+
+        public IEnumerable<Publisher> SearchPublishersAlphabetically(string letter)
+        {
+            return _publisherRepository.SearchAlphabetically(letter);
+        }
     }
 }
