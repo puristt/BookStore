@@ -1,6 +1,7 @@
-﻿@using Entities.DataModels
+﻿@using Entities.AdminViewModels.Category
+@using BookStoreAdmin.Models.Pagination
 
-@model IEnumerable<Category>
+@model PagedListModel<CategoryListPagingModel>
 
 
 
@@ -69,9 +70,12 @@
 
 @section scripts{
     <script>
+        var selector = '.pagination-list li';
         var itemId = -1;
 
         $(function () {
+            $(".pagination-list li:first-child").addClass('active');
+
             $("#categoryName").keypress(function (event) {
                 if (event.keyCode == 13) {
                     event.preventDefault();
@@ -119,6 +123,27 @@
                 }
             });
         }
+
+        function paging(val) {
+            var categoryName = $("#categoryName").val();
+            var value = $(val).text();
+            var pageNum = parseInt(value);
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Category/LoadCategoryList",
+                data: { searchText: categoryName, page: pageNum },
+                success: function (response) {
+                    $("#categoryList").html(response);
+
+                    $(selector).removeClass('active');
+                    $('.pagination-list').find(val).addClass('active');
+                }
+            });
+
+        }
+
 
     </script>
 

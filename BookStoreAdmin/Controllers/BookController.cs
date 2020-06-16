@@ -1,4 +1,5 @@
 ﻿using BookStoreAdmin.Models;
+using BookStoreAdmin.Models.Pagination;
 using BusinessLayer.Services.AuthorService;
 using BusinessLayer.Services.BookService;
 using BusinessLayer.Services.CategoryService;
@@ -26,10 +27,12 @@ namespace BookStoreAdmin.Controllers
             _authorService = authorService;
         }
         // GET: Book
-        public ActionResult Index(BookResultViewModel model)
+        public ActionResult Index(InitiliazeBookResultViewModel model, int page = 1)
         {
             model.FilterValues = PrepareFilterModel(model.FilterValues);
-            model.Books = _bookService.GetFilteredBookList(model.SearchModel);
+            model.PagedList.CurrentList = _bookService.GetFilteredBookList(model.SearchModel, page, model.PagedList.PageSize, out var totalItemCount);
+            model.PagedList.TotalItemCount = totalItemCount;
+            model.PagedList.CurrentPageNumber = page;
             return View(model);
         }
 
@@ -45,18 +48,22 @@ namespace BookStoreAdmin.Controllers
             return View();
         }
 
-        public PartialViewResult LoadFilteredResults(SearchModel filter)
+        public PartialViewResult LoadFilteredResults(SearchModel filter, int page = 1)
         {
-            var model = _bookService.GetFilteredBookList(filter);
+            PagedListModel<FilteredBookListModel> model = new PagedListModel<FilteredBookListModel>();
 
-            return PartialView("_BookListPartial",model);
+            model.CurrentList = _bookService.GetFilteredBookList(filter, page, model.PageSize, out var totalItemCount);
+            model.TotalItemCount = totalItemCount;
+            model.CurrentPageNumber = page;
+
+            return PartialView("_BookListPartial", model);
         }
 
         public BookFilterModel PrepareFilterModel(BookFilterModel model)
         {
-            model.Authors = new MultiSelectList(_authorService.GetAllAuthors(), "Id", "Name",null);
+            model.Authors = new MultiSelectList(_authorService.GetAllAuthors(), "Id", "Name", null);
             model.Categories = new MultiSelectList(_categoryService.GetAllCategories(), "Id", "Title");
-            model.Publishers = new MultiSelectList(_publisherService.GetAllPublishers(), "Id", "Name",null);
+            model.Publishers = new MultiSelectList(_publisherService.GetAllPublishers(), "Id", "Name", null);
 
             return model;
         }

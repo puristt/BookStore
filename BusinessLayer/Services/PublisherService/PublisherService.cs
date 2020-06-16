@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.ErrorHelper;
+using DataAccessLayer.DatabaseManager;
 using DataAccessLayer.Repository.BookRepository;
 using DataAccessLayer.Repository.PublisherRepository;
 using Entities;
+using Entities.AdminViewModels.Publisher;
 using Entities.DataModels;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,12 @@ namespace BusinessLayer.Services.PublisherService
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IBookRepository _bookRepository;
-        public PublisherService(IPublisherRepository publisherRepository, IBookRepository bookRepository)
+        private readonly IDapperRepository<Publisher> _dapperRepository;
+        public PublisherService(IPublisherRepository publisherRepository, IBookRepository bookRepository, IDapperRepository<Publisher> dapperRepository)
         {
             _publisherRepository = publisherRepository;
             _bookRepository = bookRepository;
+            _dapperRepository = dapperRepository;
         }
         public IEnumerable<Publisher> GetAllPublishers()
         {
@@ -52,7 +56,7 @@ namespace BusinessLayer.Services.PublisherService
 
         public IEnumerable<Publisher> SearchPublisherByName(string publisherName)
         {
-            if(publisherName == null)
+            if (publisherName == null)
             {
                 publisherName = "";
             }
@@ -79,12 +83,35 @@ namespace BusinessLayer.Services.PublisherService
                 return false;
 
             return true;
-            
+
         }
 
         public IEnumerable<Publisher> SearchPublishersAlphabetically(string letter)
         {
             return _publisherRepository.SearchAlphabetically(letter);
+        }
+
+        public IEnumerable<PublisherListModel> SearchPublisherByNameWithPaging(string searchText, int pageNumber, int pageSize, out int totalItemCount)
+        {
+            if (searchText == null)
+            {
+                searchText = "";
+            }
+            var parameters = new { Name = searchText, PageNumber = pageNumber, PageSize = pageSize };
+
+            var result = _dapperRepository.LoadData<PublisherListModel>("spSearchPublisherByNameWithPaging", parameters);
+
+            totalItemCount = result.Any() ? result.First().TotalRows : 0;
+
+            return result;
+        }
+
+        public IEnumerable<PublisherListModel> GetAllWithPaging(out int totalItemCount)
+        {
+            var result = _dapperRepository.LoadData<PublisherListModel>("spGetAllPublishersPaging");
+            totalItemCount = result.Any() ? result.First().TotalRows : 0;
+
+            return result;
         }
     }
 }

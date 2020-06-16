@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Services.AuthorService;
+﻿using BookStoreAdmin.Models.Pagination;
+using BusinessLayer.Services.AuthorService;
+using Entities.AdminViewModels.Author;
 using Entities.DataModels;
 using System;
 using System.Collections.Generic;
@@ -18,10 +20,14 @@ namespace BookStoreAdmin.Controllers
             _authorService = authorService;
         }
         // GET: Author
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            var authorList = _authorService.GetAllAuthors();
-            return View(authorList);
+            PagedListModel<AuthorListModel> model = new PagedListModel<AuthorListModel>();
+
+            model.CurrentList = _authorService.GetAllWithPaging(out int totalItemCount);
+            model.TotalItemCount = totalItemCount;
+            model.CurrentPageNumber = page;
+            return View(model);
         }
         [Route("Author/Detail")]
         [Route("Author/Detail/{id}")]
@@ -65,9 +71,12 @@ namespace BookStoreAdmin.Controllers
             return View();
         }
 
-        public PartialViewResult LoadAuthorList(string searchText)
+        public PartialViewResult LoadAuthorList(string searchText, int page = 1)
         {
-            var model = _authorService.SearchAuthorByName(searchText);
+            PagedListModel<AuthorListModel> model = new PagedListModel<AuthorListModel>();
+            model.CurrentList = _authorService.SearchAuthorByNameWithPaging(searchText, page, model.PageSize, out int totalItemCount);
+            model.TotalItemCount = totalItemCount;
+            model.CurrentPageNumber = page;
             return PartialView("_AuthorListPartial", model);
         }
 

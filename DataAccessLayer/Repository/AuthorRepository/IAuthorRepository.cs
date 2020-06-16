@@ -15,5 +15,6 @@ namespace DataAccessLayer.Repository.AuthorRepository
         Author CheckByName(string name);
         int Save(Author entity);
         int Delete(int id);
+        IEnumerable<Author> SearchAlphabetically(string letter);
     }
 }

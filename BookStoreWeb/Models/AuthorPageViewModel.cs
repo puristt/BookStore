@@ -6,7 +6,7 @@ using System.Web;
 
 namespace BookStoreWeb.Models
 {
-    public class PublisherPageViewModel : AlphabeticPageModel<Publisher>
+    public class AuthorPageViewModel : AlphabeticPageModel<Author>
     {
 
     }

@@ -19,7 +19,7 @@ namespace BookStoreWeb.Controllers
         public ActionResult Index()
         {
             PublisherPageViewModel viewModel = new PublisherPageViewModel();
-            viewModel.Publishers = _publisherService.GetAllPublishers();
+            viewModel.ItemList = _publisherService.GetAllPublishers();
             return View(viewModel);
         }
 

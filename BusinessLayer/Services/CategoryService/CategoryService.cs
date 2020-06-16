@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.ErrorHelper;
+using DataAccessLayer.DatabaseManager;
 using DataAccessLayer.Repository.BookRepository;
 using DataAccessLayer.Repository.CategoryRepository;
 using Entities;
+using Entities.AdminViewModels.Category;
 using Entities.DataModels;
 using Entities.WebViewModels.Category;
 using System;
@@ -16,11 +18,13 @@ namespace BusinessLayer.Services.CategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IBookRepository _bookRepository;
+        private readonly IDapperRepository<Publisher> _dapperRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository, IBookRepository bookRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IBookRepository bookRepository, IDapperRepository<Publisher> dapperRepository)
         {
             _categoryRepository = categoryRepository;
             _bookRepository = bookRepository;
+            _dapperRepository = dapperRepository;
         }
         public IEnumerable<Category> GetAllCategories()
         {
@@ -94,6 +98,29 @@ namespace BusinessLayer.Services.CategoryService
                 return false;
 
             return true;
+        }
+
+        public IEnumerable<CategoryListPagingModel> GetAllWithPaging(out int totalItemCount)
+        {
+            var result = _dapperRepository.LoadData<CategoryListPagingModel>("spGetAllCategoriesPaging");
+            totalItemCount = result.Any() ? result.First().TotalRows : 0;
+
+            return result;
+        }
+
+        public IEnumerable<CategoryListPagingModel> SearchCategoryByTitleWithPaging(string searchText, int pageNumber, int pageSize, out int totalItemCount)
+        {
+            if (searchText == null)
+            {
+                searchText = "";
+            }
+            var parameters = new { Title = searchText, PageNumber = pageNumber, PageSize = pageSize };
+
+            var result = _dapperRepository.LoadData<CategoryListPagingModel>("spSearchCategoryByTitleWithPaging", parameters);
+
+            totalItemCount = result.Any() ? result.First().TotalRows : 0;
+
+            return result;
         }
     }
 }

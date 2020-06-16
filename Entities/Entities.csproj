@@ -63,10 +63,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminViewModels\Author\AuthorListModel.cs" />
     <Compile Include="AdminViewModels\Book\BookFilterModel.cs" />
     <Compile Include="AdminViewModels\Book\InsertBookModel.cs" />
     <Compile Include="AdminViewModels\Book\SearchModel.cs" />
     <Compile Include="AdminViewModels\Book\FilteredBookListModel.cs" />
+    <Compile Include="AdminViewModels\Category\CategoryListPagingModel.cs" />
+    <Compile Include="AdminViewModels\Publisher\PublisherListModel.cs" />
     <Compile Include="DataModels\Author.cs" />
     <Compile Include="DataModels\Book.cs" />
     <Compile Include="DataModels\BookImage.cs" />

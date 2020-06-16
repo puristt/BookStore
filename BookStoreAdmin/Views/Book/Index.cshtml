@@ -1,5 +1,5 @@
 ﻿@using BookStoreAdmin.Models
-@model BookResultViewModel
+@model InitiliazeBookResultViewModel
 
 
 
@@ -78,7 +78,7 @@
 
                 <div id="bookList" style="padding: 0 50px 150px 50px;">
 
-                    @Html.Partial("_BookListPartial", Model.Books)
+                    @Html.Partial("_BookListPartial", Model.PagedList)
 
                 </div>
             </div>
@@ -92,5 +92,6 @@
 @section scripts{
 
     <script src="~/Scripts/FilterScripts.js"></script>
+
 
 }

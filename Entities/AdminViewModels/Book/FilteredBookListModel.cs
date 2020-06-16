@@ -17,6 +17,7 @@ namespace Entities.AdminViewModels.Book
         public string PublisherName { get; set; }
         public decimal Price { get; set; }
         public DateTime? PublicationDate { get; set; }
+        public int TotalRows { get; set; }
 
     }
 }

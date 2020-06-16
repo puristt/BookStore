@@ -57,6 +57,12 @@ namespace DataAccessLayer.Repository.AuthorRepository
             return result;
         }
 
+        public IEnumerable<Author> SearchAlphabetically(string letter)
+        {
+            var parameters = new { Letter = letter };
+            return _repository.LoadData("spGetAuthorsWithAlphabeticSearch", parameters);
+        }
+
         public IEnumerable<Author> SearchByName(string name)
         {
             var parameters = new { Name = name };

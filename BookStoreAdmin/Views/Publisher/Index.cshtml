@@ -1,6 +1,7 @@
-﻿@using Entities.DataModels
+﻿@using Entities.AdminViewModels.Publisher
+@using BookStoreAdmin.Models.Pagination
 
-@model IEnumerable<Publisher>
+@model PagedListModel<PublisherListModel>
 
 
 <div class="row">
@@ -33,6 +34,7 @@
                 <div id="publisherList">
 
                     @Html.Partial("_PublisherListPartial", Model)
+
 
                 </div>
 
@@ -68,11 +70,14 @@
 
 @section scripts{
     <script>
-
+        var selector = '.pagination-list li';
         var itemId = -1;
 
         $(function () {
-             $("#publisherName").keypress(function (event) {
+
+            $(".pagination-list li:first-child").addClass('active');
+
+            $("#publisherName").keypress(function (event) {
                 if (event.keyCode == 13) {
                     event.preventDefault();
                     $("#btnFilterPublisher").click();
@@ -88,6 +93,7 @@
                     data: { searchText: publisherName },
                     success: function (response) {
                         $("#publisherList").html(response);
+                        $(".pagination-list li:first-child").addClass('active');
                     }
                 });
             });
@@ -120,6 +126,27 @@
 
             });
         }
+        function paging(val) {
+            var publisherName = $("#publisherName").val();
+            var value = $(val).text();
+            var pageNum = parseInt(value);
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Publisher/LoadPublisherList",
+                data: { searchText: publisherName, page: pageNum },
+                success: function (response) {
+                    $("#publisherList").html(response);
+
+                    $(selector).removeClass('active');
+                    $('.pagination-list').find(val).addClass('active');
+                }
+            });
+
+        }
+
+
     </script>
 
 }

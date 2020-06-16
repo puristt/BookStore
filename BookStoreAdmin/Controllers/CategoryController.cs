@@ -1,4 +1,6 @@
-﻿using BusinessLayer.Services.CategoryService;
+﻿using BookStoreAdmin.Models.Pagination;
+using BusinessLayer.Services.CategoryService;
+using Entities.AdminViewModels.Category;
 using Entities.DataModels;
 using System;
 using System.Collections.Generic;
@@ -19,10 +21,14 @@ namespace BookStoreAdmin.Controllers
             _categoryService = categoryService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            var categoryList = _categoryService.GetAllCategories();
-            return View(categoryList);
+            PagedListModel<CategoryListPagingModel> model = new PagedListModel<CategoryListPagingModel>();
+
+            model.CurrentList = _categoryService.GetAllWithPaging(out int totalItemCount);
+            model.TotalItemCount = totalItemCount;
+            model.CurrentPageNumber = page;
+            return View(model);
         }
 
         [Route("Category/Detail")]
@@ -67,9 +73,12 @@ namespace BookStoreAdmin.Controllers
             return View();
         }
 
-        public PartialViewResult LoadCategoryList(string searchText)
+        public PartialViewResult LoadCategoryList(string searchText, int page = 1)
         {
-            var model = _categoryService.SearchCategoryByName(searchText);
+            PagedListModel<CategoryListPagingModel> model = new PagedListModel<CategoryListPagingModel>();
+            model.CurrentList = _categoryService.SearchCategoryByTitleWithPaging(searchText, page, model.PageSize, out int totalItemCount);
+            model.TotalItemCount = totalItemCount;
+            model.CurrentPageNumber = page;
             return PartialView("_CategoryListPartial",model);
         }
         public ActionResult Delete(int? id)

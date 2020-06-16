@@ -1,15 +1,32 @@
 ﻿@using Entities.AdminViewModels.Book
+@using BookStoreAdmin.Models.Pagination
 
-@model IEnumerable<FilteredBookListModel>
+@model PagedListModel<FilteredBookListModel>
 
 
-    <div class="col-lg-10 text-left" style="padding-bottom:10px;">
+<div class="col-lg-10 text-left" style="padding-bottom:10px;">
+    @if (Model.LastItemInCurrentPage > Model.TotalItemCount)
+    {
+        var lastItem = Model.TotalItemCount;
         <p>
-            Showing 1 to 30 of @Model.Count() results
+            Showing @Model.FirstItemInCurrentPage to @lastItem of @Model.TotalItemCount results
+        </p>
+    }
+    else
+    {
+        <p>
+            Showing @Model.FirstItemInCurrentPage to @Model.LastItemInCurrentPage of @Model.TotalItemCount results
         </p>
 
-    </div>
-   
+    }
+    <ul class="pagination pagination-list-top">
+        @for (int i = 1; i <= (Model.TotalPage + 1); i++)
+        {
+            <li id="@i"><a href="#" id="@i" onclick="paging('#@i')">@i</a></li>
+        }
+    </ul>
+</div>
+
 <table class="table table-striped table-advance table-hover">
 
     <tbody>
@@ -25,7 +42,7 @@
             <th>Aksiyonlar</th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.CurrentList)
         {
             <tr>
                 <td>
@@ -53,6 +70,14 @@
                 </td>
             </tr>
         }
-        
+
     </tbody>
 </table>
+
+<ul class="pagination pagination-list-bottom">
+    @for (int i = 1; i <= (Model.TotalPage + 1); i++)
+    {
+        <li id="@i"><a href="#" id="@i" onclick="paging('#@i')">@i</a></li>
+    }
+</ul>
+

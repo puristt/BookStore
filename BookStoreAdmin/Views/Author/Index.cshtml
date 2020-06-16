@@ -1,6 +1,7 @@
-﻿@using Entities.DataModels
+﻿@using Entities.AdminViewModels.Author
+@using BookStoreAdmin.Models.Pagination
 
-@model IEnumerable<Author>
+@model PagedListModel<AuthorListModel>
 
 
 
@@ -69,8 +70,11 @@
 
 @section scripts{
     <script>
-
+        var selector = '.pagination-list li';
+        var itemId = -1;
         $(function () {
+
+            $(".pagination-list li:first-child").addClass('active');
 
             $("#authorName").keypress(function (event) {
                 if (event.keyCode == 13) {
@@ -88,6 +92,7 @@
                     data: { searchText: authorName },
                     success: function (response) {
                         $("#authorList").html(response);
+                        $(".pagination-list li:first-child").addClass('active');
                     }
                 });
             });
@@ -120,6 +125,26 @@
                 }
 
             });
+        }
+
+        function paging(val) {
+            var authorName = $("#authorName").val();
+            var value = $(val).text();
+            var pageNum = parseInt(value);
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Author/LoadAuthorList",
+                data: { searchText: authorName, page: pageNum },
+                success: function (response) {
+                    $("#authorList").html(response);
+
+                    $(selector).removeClass('active');
+                    $('.pagination-list').find(val).addClass('active');
+                }
+            });
+
         }
 
 

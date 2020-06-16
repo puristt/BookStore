@@ -46,12 +46,17 @@ namespace BusinessLayer.Services.BookService
             return _dapperRepository.LoadData<BookDetailModel>("spGetBookDetail", parameters).FirstOrDefault();
         }
 
-        public IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel)
+        public IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel , int pageNumber, int pageSize, out int totalItemCount)
         {
          
+
             var parameters = GetDynamicSearchModel(searchModel);
+            parameters.PageNumber = pageNumber;
+            parameters.PageSize = pageSize;
 
             var bookList = _dapperRepository.LoadData<FilteredBookListModel>("spFilteredBookResults", (object)parameters);
+
+            totalItemCount = bookList.Any() ? bookList.First().TotalRows : 0;
 
             return bookList;
         }

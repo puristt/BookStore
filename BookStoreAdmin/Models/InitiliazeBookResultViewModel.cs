@@ -1,4 +1,5 @@
-﻿using Entities.AdminViewModels.Book;
+﻿using BookStoreAdmin.Models.Pagination;
+using Entities.AdminViewModels.Book;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,13 +7,13 @@ using System.Web;
 
 namespace BookStoreAdmin.Models
 {
-    public class BookResultViewModel
+    public class InitiliazeBookResultViewModel
     {
-        public BookResultViewModel()
+        public InitiliazeBookResultViewModel()
         {
             SearchModel = new SearchModel();
-            Books = new List<FilteredBookListModel>();
             FilterValues = new BookFilterModel();
+            PagedList = new PagedListModel<FilteredBookListModel>();
         }
         /// <summary>
         /// Seçilen filtre değerlerini tutacak ve veritabanına gönderilecek olan property
@@ -23,10 +24,8 @@ namespace BookStoreAdmin.Models
         /// Filtre satırlarının içindeki verileri dolduracak property
         /// </summary>
         public BookFilterModel FilterValues { get; set; }
-        /// <summary>
-        /// Partial view içinde listelenecek kitaplar
-        /// </summary>
-        public IEnumerable<FilteredBookListModel> Books { get; set; }
+
+        public PagedListModel<FilteredBookListModel> PagedList { get; set; }
 
     }
 }

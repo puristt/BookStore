@@ -1,10 +1,11 @@
-﻿@using Entities.DataModels
+﻿@using Entities.AdminViewModels.Author
+@using BookStoreAdmin.Models.Pagination
 
-@model IEnumerable<Author>
+@model PagedListModel<AuthorListModel>
 
 
 
-@if (!Model.Any())
+@if (!Model.CurrentList.Any())
 {
     <p class="alert alert-info" id="alertMessage">kriterlere uygun Yazar bulunamadı...</p>
 }
@@ -15,18 +16,18 @@
             <th>Açıklama</th>
             <th>Aksiyonlar</th>
         </tr>
-        @foreach (var item in Model)
+        @foreach (var item in Model.CurrentList)
         {
             <tr>
                 <td>@item.Name</td>
                 <td>
                     @if (string.IsNullOrEmpty(item.Description) == false && item.Description.Length > 70)
                     {
-                       @(item.Description.Substring(0, 70) + "...")
+                        @(item.Description.Substring(0, 70) + "...")
                     }
                     else
                     {
-                       @item.Description
+                        @item.Description
                     }
                 </td>
                 <td>
@@ -43,3 +44,26 @@
         }
     </tbody>
 </table>
+
+<div class="col-lg-10 text-left" style="padding-bottom:10px;">
+    @if (Model.LastItemInCurrentPage > Model.TotalItemCount)
+    {
+        var lastItem = Model.TotalItemCount;
+        <p>
+            Showing @Model.FirstItemInCurrentPage to @lastItem of @Model.TotalItemCount results
+        </p>
+    }
+    else
+    {
+        <p>
+            Showing @Model.FirstItemInCurrentPage to @Model.LastItemInCurrentPage of @Model.TotalItemCount results
+        </p>
+
+    }
+    <ul class="pagination pagination-list">
+        @for (int i = 1; i <= (Model.TotalPage + 1); i++)
+        {
+            <li id="@i"><a href="#" id="@i" onclick="paging('#@i')">@i</a></li>
+        }
+    </ul>
+</div>

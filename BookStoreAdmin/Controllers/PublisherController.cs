@@ -6,6 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using PagedList.Mvc;
+using Entities.AdminViewModels.Publisher;
+using BookStoreAdmin.Models.Pagination;
 
 namespace BookStoreAdmin.Controllers
 {
@@ -18,10 +22,15 @@ namespace BookStoreAdmin.Controllers
             _publisherService = publisherService;
         }
         // GET: Publisher
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            var publisherList = _publisherService.GetAllPublishers();
-            return View(publisherList);
+            PagedListModel<PublisherListModel> model = new PagedListModel<PublisherListModel>();
+
+            model.CurrentList = _publisherService.GetAllWithPaging(out int totalItemCount);
+            model.TotalItemCount = totalItemCount;
+            model.CurrentPageNumber = page;
+        
+            return View(model);
         }
         [Route("Publisher/Detail")]
         [Route("Publisher/Detail/{id}")]
@@ -64,9 +73,12 @@ namespace BookStoreAdmin.Controllers
             return View();
         }
 
-        public PartialViewResult LoadPublisherList(string searchText)
+        public ActionResult LoadPublisherList(string searchText, int page = 1)
         {
-            var model = _publisherService.SearchPublisherByName(searchText);
+            PagedListModel<PublisherListModel> model = new PagedListModel<PublisherListModel>();
+            model.CurrentList = _publisherService.SearchPublisherByNameWithPaging(searchText, page, model.PageSize, out int totalItemCount);
+            model.TotalItemCount = totalItemCount;
+            model.CurrentPageNumber = page;
             return PartialView("_PublisherListPartial",model);
         }
 

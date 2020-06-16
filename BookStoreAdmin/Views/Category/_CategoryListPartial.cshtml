@@ -1,9 +1,10 @@
-﻿@using Entities.DataModels
+﻿@using Entities.AdminViewModels.Category
+@using BookStoreAdmin.Models.Pagination
 
-@model IEnumerable<Category>
+@model PagedListModel<CategoryListPagingModel>
 
 
-@if (!Model.Any())
+@if (!Model.CurrentList.Any())
 {
     <p class="alert alert-info" id="alertMessage">kriterlere uygun kategori bulunamadı...</p>
 }
@@ -13,7 +14,7 @@
             <th><i class="icon_calendar"></i> Kategori Başlığı</th>
             <th>Aksiyonlar</th>
         </tr>
-        @foreach (var item in Model)
+        @foreach (var item in Model.CurrentList)
         {
             <tr>
                 <td>@item.Title</td>
@@ -31,3 +32,26 @@
         }
     </tbody>
 </table>
+
+<div class="col-lg-10 text-left" style="padding-bottom:10px;">
+    @if (Model.LastItemInCurrentPage > Model.TotalItemCount)
+    {
+        var lastItem = Model.TotalItemCount;
+        <p>
+            Showing @Model.FirstItemInCurrentPage to @lastItem of @Model.TotalItemCount results
+        </p>
+    }
+    else
+    {
+        <p>
+            Showing @Model.FirstItemInCurrentPage to @Model.LastItemInCurrentPage of @Model.TotalItemCount results
+        </p>
+
+    }
+    <ul class="pagination pagination-list">
+        @for (int i = 1; i <= (Model.TotalPage + 1); i++)
+        {
+            <li id="@i"><a href="#" id="@i" onclick="paging('#@i')">@i</a></li>
+        }
+    </ul>
+</div>

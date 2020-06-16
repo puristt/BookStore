@@ -1,12 +1,10 @@
-﻿@using Entities.DataModels
-@using BookStoreWeb.Models
+﻿@using BookStoreWeb.Models
 
-@model PublisherPageViewModel
+@model AuthorPageViewModel
 
 @{
     ViewBag.Title = "Index";
 }
-
 
 <div class="main-content-overlay">
     <section class="full-content">
@@ -31,9 +29,9 @@
                             <h2 style="text-align:left;">Yayınevleri</h2>
                         </div>
                         <div class="input-group col-md-6">
-                            @Html.TextBox("publisherName", null, htmlAttributes: new { @class = "form-control", placeholder = "Yayınevi Adı ile ara.." })
+                            @Html.TextBox("authorName", null, htmlAttributes: new { @class = "form-control", placeholder = "Yazar Adı ile ara.." })
                             <span class="input-group-btn">
-                                <button class="btn btn-warning" id="btnSearchPublisher" type="submit" style="color: rgb(66, 64, 64);"><b>Ara</b></button>
+                                <button class="btn btn-warning" id="btnSearchAuthor" type="submit" style="color: rgb(66, 64, 64);"><b>Ara</b></button>
                             </span>
                         </div>
                     </div>
@@ -55,9 +53,9 @@
             </div>
 
         </div>
-        <div class="container" id="publisherPageContent" style="padding-bottom:50px;">
+        <div class="container" id="authorPageContent" style="padding-bottom:50px;">
 
-            @Html.Partial("_PublisherListPartial", Model.ItemList)
+            @Html.Partial("_AuthorListPartial", Model.ItemList)
 
         </div>
 
@@ -67,13 +65,12 @@
 </div>
 
 
-
 <script>
 
     $(function () {
         var selector = '.alphabet-list li';
 
-        
+
         $(".alphabet-list li:first-child").addClass('active');
 
         $(selector).on('click', function () {
@@ -81,27 +78,27 @@
             $(this).addClass('active');
         });
 
-        $("#publisherName").keypress(function (event) {
+        $("#authorName").keypress(function (event) {
             if (event.keyCode == 13) {
                 event.preventDefault();
                 $("#btnFilterPublisher").click();
             }
         });
-        $("#btnSearchPublisher").click(function () {
+        $("#btnSearchAuthor").click(function () {
 
             $(selector).removeClass('active');
-            var publisherName = $("#publisherName").val();
+            var authorName = $("#authorName").val();
 
-            if (!publisherName) {
+            if (!authorName) {
                 return;
             }
 
             $.ajax({
                 type: "POST",
-                url: "/Publisher/GetSearchedResult",
-                data: { searchText: publisherName },
+                url: "/Author/GetSearchedResult",
+                data: { searchText: authorName },
                 success: function (response) {
-                    $("#publisherPageContent").html(response);
+                    $("#authorPageContent").html(response);
                 }
             });
         });
@@ -111,17 +108,15 @@
     function AlphabetSearch(val) {
 
         var letter = $(val).text();
-        console.log(letter);
 
         $.ajax({
             method: "GET",
-            url: "/Publisher/GetAlphabeticResult",
+            url: "/Author/GetAlphabeticResult",
             data: { "letter": letter },
             success: function (response) {
-                //var url = "?letter=" + letter;
-                //window.location.hash = url;
-                $("#publisherPageContent").html(response);
-                
+                console.log(response);
+                $("#authorPageContent").html(response);
+
             }
         });
     }
@@ -130,5 +125,3 @@
 
 
 </script>
-
-
