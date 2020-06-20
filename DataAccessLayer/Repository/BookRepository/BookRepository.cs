@@ -41,21 +41,33 @@ namespace DataAccessLayer.Repository.BookRepository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BookListModel> GetBookList()
-        {
-            return _repository.LoadData<BookListModel>("spGetAllBooksForShopList");
-        }
+        //public IEnumerable<BookListModel> GetBookList(int page, int pageSize)
+        //{
 
-        public IEnumerable<BookListModel> GetBookListByCategoryId(int id)
-        {
-            var parameters = new { CategoryId = id };
-            return _repository.LoadData<BookListModel>("spGetAllBooksForShopListByCategoryId", parameters);
-        }
+        //    return _repository.LoadData<BookListModel>("spGetAllBooksForShopList");
+        //}
 
-        public Book GetQuickViewById(int id)
+        //public IEnumerable<BookListModel> GetBookListByCategoryId(int id)
+        //{
+        //    var parameters = new { CategoryId = id };
+        //    return _repository.LoadData<BookListModel>("spGetAllBooksForShopListByCategoryId", parameters);
+        //}
+
+        //public IEnumerable<BookListModel> GetBookListByPublisherId(int id)
+        //{
+        //    var parameters = new { PublisherId = id };
+        //    return _repository.LoadData<BookListModel>("spGetBookListForShopPageByPublisher", parameters);
+        //}
+        //public IEnumerable<BookListModel> GetBookListByAuthorId(int id)
+        //{
+        //    var parameters = new { AuthorId = id };
+        //    return _repository.LoadData<BookListModel>("spGetBookListForShopPageByAuthor", parameters);
+        //}
+
+        public BookListModel GetQuickViewById(int id)
         {
             var parameters = new { Id = id };
-            return _repository.LoadData("spGetBookQuickViewById", parameters).FirstOrDefault();
+            return _repository.LoadData<BookListModel>("spGetBookQuickViewById", parameters).FirstOrDefault();
             //return _repository.FindById(id);
         }
     }

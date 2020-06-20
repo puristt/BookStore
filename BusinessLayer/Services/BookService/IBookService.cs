@@ -11,10 +11,20 @@ namespace BusinessLayer.Services.BookService
 {
     public interface IBookService
     {
-        IEnumerable<BookListModel> GetBookListForShopPage();
-        IEnumerable<BookListModel> GetBookListForShopPageByCategoryId(int id);
+        #region AdminPartService
+        IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel, int pageNumber, int pageSize, out int totalItemCount);
+
+
+        #endregion
+
+
+        #region UserPartService
+        IEnumerable<BookListModel> GetBookListForShopPage(int page, int pageSize, string sortBy, out int totalItemCount);
+        IEnumerable<BookListModel> GetBookListForShopPageByCategoryId(int id, int page, int pageSize,string sortBy, out int totalItemCount);
+        IEnumerable<BookListModel> GetBookListForShopPageByPublisherId(int id, int page, int pageSize, string sortBy, out int totalItemCount);
+        IEnumerable<BookListModel> GetBookListForShopPageByAuthorId(int id, int page, int pageSize, string sortBy, out int totalItemCount);
         BookListModel GetQuickViewById(int id);
         BookDetailModel GetBookDetail(int id);
-        IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel, int pageNumber, int pageSize, out int totalItemCount);
+        #endregion
     }
 }

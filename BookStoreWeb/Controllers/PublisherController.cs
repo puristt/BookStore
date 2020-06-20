@@ -42,5 +42,6 @@ namespace BookStoreWeb.Controllers
 
             return PartialView("_PublisherListPartial", result);
         }
+
     }
 }

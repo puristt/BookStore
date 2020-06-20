@@ -1,9 +1,11 @@
 ﻿@using Entities.WebViewModels.Book
+@using PagedList;
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Shop";
 }
-@model IEnumerable<BookListModel>
+@model StaticPagedList<BookListModel>
 
 
 <div class="shopping-area section-padding">
@@ -13,7 +15,7 @@
                 <div class="shop-widget">
                     <div class="shop-widget-top">
 
-                        @Html.Action("GetCategoriesWithBookCount","Category")
+                        @Html.Action("GetCategoriesWithBookCount", "Category")
 
                         <aside class="widget shop-filter">
                             <h2 class="sidebar-title text-center">PRICE SLIDER</h2>
@@ -31,84 +33,46 @@
                             </div>
                         </aside>
                     </div>
-                    <div class="shop-widget-bottom">
-                        <aside class="widget widget-seller">
-                            <h2 class="sidebar-title">TOP SELLERS</h2>
-                            <div class="single-seller">
-                                <div class="seller-img">
-                                    <img src="img/shop/1.jpg" alt="" />
-                                </div>
-                                <div class="seller-details">
-                                    <a href="shop.html"><h5>Cold mountain</h5></a>
-                                    <h5>$ 50.00</h5>
-                                    <ul>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-seller">
-                                <div class="seller-img">
-                                    <img src="img/shop/2.jpg" alt="" />
-                                </div>
-                                <div class="seller-details">
-                                    <a href=""><h5>The historian</h5></a>
-                                    <h5>$ 50.00</h5>
-                                    <ul>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                        <li><i class="fa fa-star icolor"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </aside>
-                    </div>
                 </div>
             </div>
             <div class="col-md-9 col-sm-9 col-xs-12">
-                <h2 class="sidebar-title text-center">CATEGORY</h2>
+                @if (ViewBag.Content != null)
+                {
+                    <h2>@ViewBag.Content</h2>
+                }
+
+                <div class="">
+                    @Html.PagedListPager(Model, page => Url.Action("Shop", new { searchSortBy = Request.QueryString["searchSortBy"], page = page }))
+                </div>
                 <div class="shop-tab-area">
                     <div class="shop-tab-list">
                         <div class="shop-tab-pill pull-left">
-                            <ul>
-                                <li class="active" id="left"><a data-toggle="pill" href="#home"><i class="fa fa-th"></i><span>Grid</span></a></li>
-                                <li><a data-toggle="pill" href="#menu1"><i class="fa fa-th-list"></i><span>List</span></a></li>
-                            </ul>
+                            @Model.TotalItemCount Ürün Listelenmektedir
                         </div>
-                        <div class="shop-tab-pill pull-right">
+                        @{ 
+                            string actionName = ViewBag.Action ?? "Shop";
+                        }
+                        @using (Html.BeginForm(actionName, "Book", FormMethod.Get, new { @class = "shop-tab-pill pull-right" }))
+                        {
                             <ul>
                                 <li class="product-size-deatils">
                                     <div class="show-label">
                                         <label>Show : </label>
-                                        <select>
-                                            <option value="10" selected="selected">10</option>
-                                            <option value="09">09</option>
-                                            <option value="08">08</option>
-                                            <option value="07">07</option>
-                                            <option value="06">06</option>
-                                        </select>
                                     </div>
                                 </li>
                                 <li class="product-size-deatils">
                                     <div class="show-label">
                                         <label><i class="fa fa-sort-amount-asc"></i>Sort by : </label>
-                                        <select>
-                                            <option value="position" selected="selected">Position</option>
-                                            <option value="Name">Name</option>
-                                            <option value="Price">Price</option>
-                                        </select>
+                                        @Html.DropDownList("searchSortBy", new SelectList(ViewBag.SortingList, "Value", "Text", ViewBag.SelectedItem),
+                                       new { onchange = "this.form.submit()" })
                                     </div>
                                 </li>
-                                <li class="shop-pagination"><a href="#">1</a></li>
-                                <li class="shop-pagination"><a href="#">2</a></li>
-                                <li class="shop-pagination"><a href="#"><i class="fa fa-caret-right"></i></a></li>
+                                @*<li class="shop-pagination"><a href="#">1</a></li>
+                                    <li class="shop-pagination"><a href="#">2</a></li>
+                                    <li class="shop-pagination"><a href="#"><i class="fa fa-caret-right"></i></a></li>*@
+
                             </ul>
-                        </div>
+                        }
                     </div>
                     <div class="tab-content">
                         <div class="row tab-pane fade in active" id="home">
@@ -167,7 +131,7 @@
 <script>
 
     var bookId = -1;
-    
+
 
     $(function () {
         $('#productModal').on('show.bs.modal',

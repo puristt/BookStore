@@ -25,30 +25,59 @@ namespace BusinessLayer.Services.BookService
 
         public BookListModel GetQuickViewById(int id)
         {
-            
-            return GetBookListForShopPage().Where(x => x.Id == id).FirstOrDefault();
+
+            return _bookRepository.GetQuickViewById(id);
         }
 
-        public IEnumerable<BookListModel> GetBookListForShopPage()
+        public IEnumerable<BookListModel> GetBookListForShopPage(int page, int pageSize, string sortBy, out int totalItemCount)
         {
+            var parameters = new { PageNumber = page, PageSize = pageSize, SortBy = sortBy };
 
-            return _bookRepository.GetBookList();
+            var result = _dapperRepository.LoadData<BookListModel>("spGetAllBooksForShopList", parameters);
+
+            totalItemCount = result.Any() ? result.First().TotalRows : 0;
+            return result;
         }
 
-        public IEnumerable<BookListModel> GetBookListForShopPageByCategoryId(int id)
+        public IEnumerable<BookListModel> GetBookListForShopPageByCategoryId(int id, int page, int pageSize, string sortBy, out int totalItemCount)
         {
-            return _bookRepository.GetBookListByCategoryId(id);
-        }
+            var parameters = new { CategoryId = id, PageNumber = page, PageSize = pageSize, SortBy = sortBy };
 
+            var result = _dapperRepository.LoadData<BookListModel>("spGetAllBooksForShopListByCategoryId", parameters);
+
+            totalItemCount = result.Any() ? result.First().TotalRows : 0;
+
+            return result;
+        }
+        public IEnumerable<BookListModel> GetBookListForShopPageByPublisherId(int id, int page, int pageSize, string sortBy, out int totalItemCount)
+        {
+            var parameters = new { PublisherId = id, PageNumber = page, PageSize = pageSize, SortBy = sortBy };
+
+            var result = _dapperRepository.LoadData<BookListModel>("spGetBookListForShopPageByPublisher", parameters);
+
+            totalItemCount = result.Any() ? result.First().TotalRows : 0;
+
+            return result;
+        }
+        public IEnumerable<BookListModel> GetBookListForShopPageByAuthorId(int id, int page, int pageSize, string sortBy, out int totalItemCount)
+        {
+            var parameters = new { AuthorId = id, PageNumber = page, PageSize = pageSize, SortBy = sortBy };
+
+            var result = _dapperRepository.LoadData<BookListModel>("spGetBookListForShopPageByAuthor", parameters);
+
+            totalItemCount = result.Any() ? result.First().TotalRows : 0;
+
+            return result;
+        }
         public BookDetailModel GetBookDetail(int id)
         {
             var parameters = new { Id = id };
             return _dapperRepository.LoadData<BookDetailModel>("spGetBookDetail", parameters).FirstOrDefault();
         }
 
-        public IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel , int pageNumber, int pageSize, out int totalItemCount)
+        public IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel, int pageNumber, int pageSize, out int totalItemCount)
         {
-         
+
 
             var parameters = GetDynamicSearchModel(searchModel);
             parameters.PageNumber = pageNumber;
@@ -70,15 +99,15 @@ namespace BusinessLayer.Services.BookService
             string publisherIds = "";
             string authorIds = "";
 
-            if(model.CategoryIds != null)
+            if (model.CategoryIds != null)
             {
                 categoryIds = string.Join(",", model.CategoryIds);
             }
-            if(model.PublisherIds != null)
+            if (model.PublisherIds != null)
             {
                 publisherIds = string.Join(",", model.PublisherIds);
             }
-            if(model.AuthorIds != null)
+            if (model.AuthorIds != null)
             {
                 authorIds = string.Join(",", model.AuthorIds);
             }
@@ -94,5 +123,7 @@ namespace BusinessLayer.Services.BookService
 
             return parameter;
         }
+
+
     }
 }
