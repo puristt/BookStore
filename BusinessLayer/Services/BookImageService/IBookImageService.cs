@@ -10,5 +10,6 @@ namespace BusinessLayer.Services.BookImageService
     public interface IBookImageService
     {
         IEnumerable<BookImage> GetImagesForBook(int bookId);
+       
     }
 }

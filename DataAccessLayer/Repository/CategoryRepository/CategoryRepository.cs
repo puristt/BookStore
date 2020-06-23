@@ -20,7 +20,11 @@ namespace DataAccessLayer.Repository.CategoryRepository
         {
             return _repository.LoadData("spGetAllCategories");
         }
-
+        public IEnumerable<Category> GetBookCategories(int bookId)
+        {
+            var parameters = new { BookId = bookId };
+            return _repository.LoadData("spGetBookCategories", parameters);
+        }
         public IEnumerable<Category> GetAllByBookId(int id)
         {
             var parameters = new { BookId = id };
@@ -73,5 +77,7 @@ namespace DataAccessLayer.Repository.CategoryRepository
             var parameters = new { Id = id };
             return _repository.SaveData<Category>("spDeleteCategory", parameters);
         }
+
+
     }
 }

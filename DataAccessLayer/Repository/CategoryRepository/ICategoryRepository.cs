@@ -10,8 +10,10 @@ namespace DataAccessLayer.Repository.CategoryRepository
 {
     public interface ICategoryRepository
     {
+
         IEnumerable<Category> GetAll();
         IEnumerable<Category> GetAllByBookId(int id);
+        IEnumerable<Category> GetBookCategories(int bookId);
         IEnumerable<CategoryListModel> GetCategoryListModel();
         Category GetById(int id);
         int Save(Category entity);

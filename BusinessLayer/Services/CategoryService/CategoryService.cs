@@ -35,7 +35,10 @@ namespace BusinessLayer.Services.CategoryService
         {
             return _categoryRepository.GetCategoryListModel();
         }
-
+        public IEnumerable<Category> GetBookCategories(int bookId)
+        {
+            return _categoryRepository.GetBookCategories(bookId);
+        }
         public Category GetCategoryById(int id)
         {
             return _categoryRepository.GetById(id);

@@ -37,21 +37,22 @@ namespace BusinessLayer.Services.PublisherService
         public GenericResults<Publisher> SaveModel(Publisher model)
         {
             var db_publisher = _publisherRepository.CheckByName(model.Name);
-            GenericResults<Publisher> updateModel = new GenericResults<Publisher>();
+            GenericResults<Publisher> genericModel = new GenericResults<Publisher>();
 
             if (db_publisher != null)
             {
-                updateModel.AddError(ErrorMessageCode.PublisherAlreadyExists, "Bu Yayınevi zaten sistemde Kayıtlı!");
-                return updateModel;
+                genericModel.AddError(ErrorMessageCode.PublisherAlreadyExists, "Bu Yayınevi zaten sistemde Kayıtlı!");
+                return genericModel;
             }
 
-            updateModel.Model = this.PrepareEntity(model);
-            int result = _publisherRepository.Save(updateModel.Model);
+            genericModel.Model = this.PrepareEntity(model);
+            int result = _publisherRepository.Save(genericModel.Model);
+
             if (result == 0)
             {
-                updateModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir hata oluştu. Lütfen Tekrar Deneyiniz!");
+                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir hata oluştu. Lütfen Tekrar Deneyiniz!");
             }
-            return updateModel;
+            return genericModel;
         }
 
         public IEnumerable<Publisher> SearchPublisherByName(string publisherName)

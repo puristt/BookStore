@@ -65,8 +65,18 @@ namespace DataAccessLayer.DatabaseManager
                 return row;
             }
         }
+        public int SaveDataWithReturnId(string storedProcedure, object parameters = null)
+        {
+            string connectionString = GetConnectionString();
 
+            using (IDbConnection connection = new SqlConnection(connectionString))
+            {
 
+                int id = connection.Query<int>(storedProcedure, parameters, commandType: CommandType.StoredProcedure).Single();
+
+                return id;
+            }
+        }
         public int Count(object predicates = null)
         {
             string connectionString = GetConnectionString();
@@ -90,5 +100,7 @@ namespace DataAccessLayer.DatabaseManager
                 return count;
             }
         }
+
+
     }
 }

@@ -262,9 +262,6 @@
     <Content Include="Content\Template\img\featured\7.jpg" />
     <Content Include="Content\Template\img\featured\8.jpg" />
     <Content Include="Content\Template\style.css" />
-    <Content Include="Images\book_2-1.jpg" />
-    <Content Include="Images\book_4-1.jpg" />
-    <Content Include="Images\book_5-1.jpg" />
     <Content Include="Content\Template\img\featured\d1.jpg" />
     <Content Include="Content\Template\img\featured\d2.jpg" />
     <Content Include="Content\Template\img\featured\d3.jpg" />
@@ -337,7 +334,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\no_image150x207.jpg" />
-    <Content Include="Images\book_4-2.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\Template\fonts\Flaticon.eot" />

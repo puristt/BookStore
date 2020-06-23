@@ -12,31 +12,45 @@
             <div class="col-md-6 col-sm-7">
                 <div class="main-image-div" style="padding:5px;">
                     <div class="single-product-image-inner">
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="one">
-                                <a class="venobox" href="~/Content/Template/img/single-product/bg-1.jpg" data-gall="gallery" title="">
-                                    <img src="~/Content/Template/img/featured/3.jpg" width="270" height="350" class="center-img" alt="">
-                                </a>
+
+                        @if (Model.BookImages.Any())
+                        {
+                            <div class="tab-content">
+
+                                @foreach (var item in Model.BookImages)
+                                {
+                                    <div role="tabpanel" class="tab-pane" id="@item.Id">
+                                        <a class="venobox" href="~/Content/Template/img/single-product/bg-1.jpg" data-gall="gallery" title="">
+                                            <img src="@Url.Content(item.Url)" width="270" height="350" class="center-img" alt="">
+                                        </a>
+                                    </div>
+                                }
+                                <ul class="product-tabs" role="tablist">
+                                    @foreach (var item in Model.BookImages)
+                                    {
+                                        <li role="presentation" class="active">
+                                            <a href="@item.Id" aria-controls="@item.Id" role="tab" data-toggle="tab">
+                                                <img src="@Url.Content(item.Url)" alt="">
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="two">
-                                <a class="venobox" href="~/Images/book_5-1.jpg" data-gall="gallery" title="">
-                                    <img src="~/Images/book_5-1.jpg" width="270" height="350" class="center-img" alt="">
-                                </a>
+                         
+                        }
+                        else
+                        {
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="one">
+                                    <a class="venobox" href="~/Content/Template/img/single-product/bg-1.jpg" data-gall="gallery" title="">
+                                        <img src="~/Images/no_image150x207.jpg" width="270" height="350" class="center-img" alt="">
+                                    </a>
+                                </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="three">
-                                <a class="venobox" href="~/Images/book_4-1.jpg" data-gall="gallery" title="">
-                                    <img src="~/Images/book_4-1.jpg" width="270" height="350" class="center-img" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Nav tabs -->
-                        
-                        <ul class="product-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#one" aria-controls="one" role="tab" data-toggle="tab"><img src="~/Content/Template/img/featured/3.jpg" alt=""></a></li>
-                            <li role="presentation"><a href="#two" aria-controls="two" role="tab" data-toggle="tab"><img src="~/Images/book_5-1.jpg" /></a></li>
-                            <li role="presentation"><a href="#three" aria-controls="three" role="tab" data-toggle="tab"><img src="~/Images/book_4-1.jpg" alt=""></a></li>
-                        </ul>
+                        }
+
                     </div>
                 </div>
 

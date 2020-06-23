@@ -80,14 +80,10 @@ namespace BookStoreAdmin.Controllers
             return PartialView("_AuthorListPartial", model);
         }
 
-        public ActionResult Delete(int? id)
+        public JsonResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
 
-            bool deleteResult = _authorService.DeleteAuthor(id.Value);
+            bool deleteResult = _authorService.DeleteAuthor(id);
 
             return Json(new { result = deleteResult }, JsonRequestBehavior.AllowGet);
         }

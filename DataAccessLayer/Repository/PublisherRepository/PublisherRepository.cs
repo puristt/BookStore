@@ -46,12 +46,12 @@ namespace DataAccessLayer.Repository.PublisherRepository
             if (entity.Id == default)
             {
                 var parameters = new { entity.Name};
-                result = _repository.SaveData<Author>("spInsertPublisher", parameters);
+                result = _repository.SaveData<Publisher>("spInsertPublisher", parameters);
             }
             else
             {
                 var parameters = new { entity.Id, entity.Name};
-                result = _repository.SaveData<Author>("spUpdatePublisher", parameters);
+                result = _repository.SaveData<Publisher>("spUpdatePublisher", parameters);
             }
 
             return result;

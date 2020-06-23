@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminViewModels\Author\AuthorListModel.cs" />
-    <Compile Include="AdminViewModels\Book\BookFilterModel.cs" />
+    <Compile Include="AdminViewModels\Book\BookRelatedDropDownListModel.cs" />
     <Compile Include="AdminViewModels\Book\InsertBookModel.cs" />
     <Compile Include="AdminViewModels\Book\SearchModel.cs" />
     <Compile Include="AdminViewModels\Book\FilteredBookListModel.cs" />

@@ -12,7 +12,7 @@ namespace BookStoreAdmin.Models
         public InitiliazeBookResultViewModel()
         {
             SearchModel = new SearchModel();
-            FilterValues = new BookFilterModel();
+            FilterValues = new BookRelatedDropDownListModel();
             PagedList = new PagedListModel<FilteredBookListModel>();
         }
         /// <summary>
@@ -23,7 +23,7 @@ namespace BookStoreAdmin.Models
         /// <summary>
         /// Filtre satırlarının içindeki verileri dolduracak property
         /// </summary>
-        public BookFilterModel FilterValues { get; set; }
+        public BookRelatedDropDownListModel FilterValues { get; set; }
 
         public PagedListModel<FilteredBookListModel> PagedList { get; set; }
 

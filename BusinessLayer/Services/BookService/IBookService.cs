@@ -1,4 +1,5 @@
-﻿using Entities.AdminViewModels.Book;
+﻿using BusinessLayer.ErrorHelper;
+using Entities.AdminViewModels.Book;
 using Entities.DataModels;
 using Entities.WebViewModels.Book;
 using System;
@@ -13,8 +14,8 @@ namespace BusinessLayer.Services.BookService
     {
         #region AdminPartService
         IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel, int pageNumber, int pageSize, out int totalItemCount);
-
-
+        GenericResults<InsertBookModel> SaveModel(InsertBookModel model, List<string> imageUrls);
+        InsertBookModel GetBookById(int id);
         #endregion
 
 

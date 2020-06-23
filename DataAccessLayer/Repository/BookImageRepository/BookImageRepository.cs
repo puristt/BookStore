@@ -20,5 +20,11 @@ namespace DataAccessLayer.Repository.BookImageRepository
             var parameters = new { BookId = id };
             return _repository.LoadData("spGetBookImages", parameters);
         }
+
+        public int SaveImagesByBookId(string imageUrls, int bookId)
+        {
+            var parameters = new { ImageUrls = imageUrls, BookId = bookId };
+            return _repository.SaveData<int>("spInsertBookImages", parameters);
+        }
     }
 }

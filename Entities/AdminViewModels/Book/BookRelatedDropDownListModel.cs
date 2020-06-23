@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Entities.AdminViewModels.Book
 {
-    public class BookFilterModel
+    public class BookRelatedDropDownListModel
     {
         public MultiSelectList Categories { get; set; }
         public MultiSelectList Publishers { get; set; }

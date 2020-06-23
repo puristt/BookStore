@@ -202,6 +202,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\InitiliazeBookResultViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InsertBookViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Pagination\PagedListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -685,6 +686,10 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\64px-Warning.svg.png" />
+    <Content Include="Images\book_deneme1.jpg" />
+    <Content Include="Images\book_deneme2.jpg" />
+    <Content Include="Images\book_deneme3.jpg" />
+    <Content Include="Images\book_deneme4.jpg" />
     <Content Include="Images\delete-icon.jpg" />
     <Content Include="Images\no_image150x207.jpg" />
     <Content Include="Images\success-icon.png" />

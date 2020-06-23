@@ -10,5 +10,6 @@ namespace DataAccessLayer.Repository.BookImageRepository
     public interface IBookImageRepository
     {
         IEnumerable<BookImage> GetBookImages(int id);
+        int SaveImagesByBookId(string imageUrls, int bookId);
     }
 }

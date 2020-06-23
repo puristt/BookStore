@@ -11,6 +11,7 @@ namespace Entities
         SomethingWentWrong = 400,
         CategoryALreadyExists = 101,
         AuthorAlreadyExists = 102,
-        PublisherAlreadyExists = 103
+        PublisherAlreadyExists = 103,
+        BookAlreadyExists = 104,
     }
 }

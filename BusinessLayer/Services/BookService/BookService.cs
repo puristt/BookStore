@@ -1,5 +1,8 @@
-﻿using DataAccessLayer.DatabaseManager;
+﻿using BusinessLayer.ErrorHelper;
+using DataAccessLayer.DatabaseManager;
+using DataAccessLayer.Repository.BookImageRepository;
 using DataAccessLayer.Repository.BookRepository;
+using Entities;
 using Entities.AdminViewModels.Book;
 using Entities.DataModels;
 using Entities.WebViewModels.Book;
@@ -16,11 +19,18 @@ namespace BusinessLayer.Services.BookService
     {
         private readonly IBookRepository _bookRepository;
         private readonly IDapperRepository<Book> _dapperRepository;
+        private readonly IBookImageRepository _bookImageRepository;
 
-        public BookService(IBookRepository bookRepository, IDapperRepository<Book> dapperRepository)
+        public BookService(IBookRepository bookRepository, IDapperRepository<Book> dapperRepository, IBookImageRepository bookImageRepository)
         {
             _bookRepository = bookRepository;
             _dapperRepository = dapperRepository;
+            _bookImageRepository = bookImageRepository;
+        }
+
+        public InsertBookModel GetBookById(int id)
+        {
+            return _bookRepository.GetById(id);
         }
 
         public BookListModel GetQuickViewById(int id)
@@ -89,7 +99,53 @@ namespace BusinessLayer.Services.BookService
 
             return bookList;
         }
+        public GenericResults<InsertBookModel> SaveModel(InsertBookModel model, List<string> imageUrls)
+        {
+            var db_book = _bookRepository.GetByISBN13(model.ISBN13);
+            GenericResults<InsertBookModel> genericModel = new GenericResults<InsertBookModel>();
 
+            if (db_book != null)
+            {
+                genericModel.AddError(ErrorMessageCode.BookAlreadyExists, "ISBN13 Numarası zaten daha önce kayıt edilmiş!");
+                return genericModel;
+            }
+
+            Book entity = new Book();
+            entity.Title = model.Title;
+            entity.Description = model.Description;
+            entity.PublicationDate = model.PublicationDate;
+            entity.Price = model.Price;
+            entity.ISBN13 = model.ISBN13;
+            entity.Page = model.Page;
+            entity.PublisherId = model.PublisherId;
+            entity.AuthorId = model.AuthorId;
+            entity.Stock = model.Stock;
+
+            var generatedBookId = _bookRepository.Save(entity);
+
+            if (generatedBookId == 0)
+            {
+                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir hata oluştu. Lütfen Tekrar Deneyiniz!");
+            }
+
+            var urls = string.Join(",", imageUrls);
+            int imageResult = _bookImageRepository.SaveImagesByBookId(urls, generatedBookId);
+            if (imageResult == 0)
+            {
+                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir hata oluştu. Lütfen Tekrar Deneyiniz!");
+            }
+
+            var bookCategories = string.Join(",", model.CategoryIds);
+
+            int categoryResult = _bookRepository.SaveBookCategories(bookCategories, generatedBookId);
+            if (categoryResult == 0)
+            {
+                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir hata oluştu. Lütfen Tekrar Deneyiniz!");
+            }
+
+            return genericModel;
+
+        }
 
 
 

@@ -1,4 +1,5 @@
-﻿using Entities.DataModels;
+﻿using Entities.AdminViewModels.Book;
+using Entities.DataModels;
 using Entities.WebViewModels.Book;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,11 @@ namespace DataAccessLayer.Repository.BookRepository
     public interface IBookRepository
     {
         IEnumerable<Book> GetAll();
+        InsertBookModel GetById(int id);
         BookListModel GetQuickViewById(int id);
-        //IEnumerable<BookListModel> GetBookList(int page, int pageSize);
+        Book GetByISBN13(string ISBN);
+        int Save(Book entity);
+        int SaveBookCategories(string categoryIds, int bookId);
         int CountByPublisherId(int publisherId);
         int CountByAuthorId(int authorId);
         int CountByCategoryId(int categoryId);

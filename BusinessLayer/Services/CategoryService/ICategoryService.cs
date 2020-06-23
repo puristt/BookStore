@@ -15,6 +15,7 @@ namespace BusinessLayer.Services.CategoryService
         IEnumerable<Category> GetAllCategories();
         IEnumerable<CategoryListPagingModel> GetAllWithPaging(out int totalItemCount);
         IEnumerable<CategoryListModel> GetCategoriesWithBookCount();
+        IEnumerable<Category> GetBookCategories(int bookId);
         IEnumerable<Category> GetRelatedCategoriesByBookId(int id);
         Category GetCategoryById(int id);
         GenericResults<Category> SaveModel(Category model);

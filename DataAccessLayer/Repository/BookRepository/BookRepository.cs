@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.DatabaseManager;
+using Entities.AdminViewModels.Book;
 using Entities.DataModels;
 using Entities.WebViewModels.Book;
 using System;
@@ -41,34 +42,58 @@ namespace DataAccessLayer.Repository.BookRepository
             throw new NotImplementedException();
         }
 
-        //public IEnumerable<BookListModel> GetBookList(int page, int pageSize)
-        //{
+        public InsertBookModel GetById(int id)
+        {
+            var parameters = new { Id = id };
+            return _repository.LoadData<InsertBookModel>("spGetBook", parameters).FirstOrDefault();
+        }
 
-        //    return _repository.LoadData<BookListModel>("spGetAllBooksForShopList");
-        //}
-
-        //public IEnumerable<BookListModel> GetBookListByCategoryId(int id)
-        //{
-        //    var parameters = new { CategoryId = id };
-        //    return _repository.LoadData<BookListModel>("spGetAllBooksForShopListByCategoryId", parameters);
-        //}
-
-        //public IEnumerable<BookListModel> GetBookListByPublisherId(int id)
-        //{
-        //    var parameters = new { PublisherId = id };
-        //    return _repository.LoadData<BookListModel>("spGetBookListForShopPageByPublisher", parameters);
-        //}
-        //public IEnumerable<BookListModel> GetBookListByAuthorId(int id)
-        //{
-        //    var parameters = new { AuthorId = id };
-        //    return _repository.LoadData<BookListModel>("spGetBookListForShopPageByAuthor", parameters);
-        //}
+        public Book GetByISBN13(string isbn13)
+        {
+            var parameters = new { ISBN13 = isbn13 };
+            return _repository.LoadData("spGetBookByISBN", parameters).FirstOrDefault();
+        }
 
         public BookListModel GetQuickViewById(int id)
         {
             var parameters = new { Id = id };
             return _repository.LoadData<BookListModel>("spGetBookQuickViewById", parameters).FirstOrDefault();
             //return _repository.FindById(id);
+        }
+
+        public int Save(Book entity)
+        {
+            int result;
+            var parameters = new
+            {
+                entity.Title,
+                entity.Description,
+                entity.PublicationDate,
+                entity.Price,
+                entity.ISBN13,
+                entity.Page,
+                entity.PublisherId,
+                entity.AuthorId,
+                entity.Stock
+            };
+
+            if (entity.Id == default)
+            {
+                result = _repository.SaveDataWithReturnId("spInsertBook", parameters);
+            }
+            else
+            {
+                result = 2;
+            }
+
+
+            return result;
+        }
+
+        public int SaveBookCategories(string categoryIds, int bookId)
+        {
+            var parameters = new { CategoryIds = categoryIds, BookId = bookId };
+            return _repository.SaveData<int>("spInsertBookCategories",parameters);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BookStoreAdmin.Models;
 using BookStoreAdmin.Models.Pagination;
 using BusinessLayer.Services.AuthorService;
+using BusinessLayer.Services.BookImageService;
 using BusinessLayer.Services.BookService;
 using BusinessLayer.Services.CategoryService;
 using BusinessLayer.Services.PublisherService;
@@ -19,12 +20,14 @@ namespace BookStoreAdmin.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IPublisherService _publisherService;
         private readonly IAuthorService _authorService;
-        public BookController(IBookService bookService, ICategoryService categoryService, IPublisherService publisherService, IAuthorService authorService)
+        private readonly IBookImageService _bookImageService;
+        public BookController(IBookService bookService, ICategoryService categoryService, IPublisherService publisherService, IAuthorService authorService, IBookImageService bookImageService)
         {
             _bookService = bookService;
             _categoryService = categoryService;
             _publisherService = publisherService;
             _authorService = authorService;
+            _bookImageService = bookImageService;
         }
         // GET: Book
         public ActionResult Index(InitiliazeBookResultViewModel model, int page = 1)
@@ -35,18 +38,61 @@ namespace BookStoreAdmin.Controllers
             model.PagedList.CurrentPageNumber = page;
             return View(model);
         }
-
+        [Route("Book/Detail")]
+        [Route("Book/Detail/{id}")]
         [HttpGet]
-        public ActionResult Detail(int? id)
+        public ActionResult Detail(int? id = null)
         {
-            return View();
+
+            InsertBookViewModel model = new InsertBookViewModel();
+            if (id != null)
+            {
+                model.Book = _bookService.GetBookById(id.Value);
+                model.BookCategories = _categoryService.GetBookCategories(id.Value);
+                model.Images = _bookImageService.GetImagesForBook(id.Value);
+            }
+
+            PrepareInsertModel(model);
+
+            return View(model);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Detail()
+        public ActionResult Detail(InsertBookViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
-            return View();
+            if (model.Book.CategoryIds == null)
+            {
+                ModelState.AddModelError("", "Lütfen Kategori Seçiniz!");
+                return View(model);
+            }
+
+            PrepareInsertModel(model);
+
+            if (ModelState.IsValid)
+            {
+                
+                var urlList = SaveImagesAndSetUrl(files, model.Book);
+                var result = _bookService.SaveModel(model.Book, urlList);
+                if(result.Errors.Count > 0)
+                {
+                    result.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(model);
+                }
+
+                if (model.Book.Id == default) TempData["Success"] = "Yeni Kitap Başarıyla Eklendi! Kitap Listesine Yönlendiriliyorsunuz...";
+                else TempData["Success"] = "Kitap Başarıyla Güncellendi! Kitap Listesine Yönlendiriliyorsunuz...";
+                ModelState.Clear();
+                return View();
+            }
+
+
+
+
+            return View(model);
         }
+
+
 
         public PartialViewResult LoadFilteredResults(SearchModel filter, int page = 1)
         {
@@ -59,7 +105,31 @@ namespace BookStoreAdmin.Controllers
             return PartialView("_BookListPartial", model);
         }
 
-        public BookFilterModel PrepareFilterModel(BookFilterModel model)
+        private List<string> SaveImagesAndSetUrl(IEnumerable<HttpPostedFileBase> files, InsertBookModel model)
+        {
+            List<string> urlList = new List<string>();
+            var rootUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            int imageNum = 0;
+            foreach (var image in files)
+            {
+                if (image != null && (image.ContentType == "image/jpeg" || image.ContentType == "image/jpg" || image.ContentType == "image/png"))
+                {
+                    imageNum++;
+                    string filename = $"{model.Title}_{imageNum}_{Guid.NewGuid()}.{image.ContentType.Split('/')[1]}";
+
+                    image.SaveAs(Server.MapPath($"~/Images/{filename}"));
+
+                    string url = $"{rootUrl}/Images/{filename}";
+
+                    urlList.Add(url);
+                }
+            }
+
+            return urlList;
+        }
+
+        #region PrepareDropdownListMethods
+        public BookRelatedDropDownListModel PrepareFilterModel(BookRelatedDropDownListModel model)
         {
             model.Authors = new MultiSelectList(_authorService.GetAllAuthors(), "Id", "Name", null);
             model.Categories = new MultiSelectList(_categoryService.GetAllCategories(), "Id", "Title");
@@ -68,6 +138,13 @@ namespace BookStoreAdmin.Controllers
             return model;
         }
 
+        public void PrepareInsertModel(InsertBookViewModel model)
+        {
+            model.AuthorList = new SelectList(_authorService.GetAllAuthors(), "Id", "Name", model.Book.AuthorId);
+            model.PublisherList = new SelectList(_publisherService.GetAllPublishers(), "Id", "Name", model.Book.PublisherId);
+            model.CategoryList = new MultiSelectList(_categoryService.GetAllCategories(), "Id", "Title", model.BookCategories.Select(x => x.Id).ToArray());
+        }
 
+        #endregion
     }
 }
