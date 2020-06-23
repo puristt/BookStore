@@ -61,6 +61,12 @@ namespace DataAccessLayer.Repository.BookRepository
             //return _repository.FindById(id);
         }
 
+        public IEnumerable<BookListModel> GetRelatedProducts(int categoryId)
+        {
+            var parameters = new { CategoryId = categoryId };
+            return _repository.LoadData<BookListModel>("spGetCategoryRelatedBooks", parameters);
+        }
+
         public int Save(Book entity)
         {
             int result;

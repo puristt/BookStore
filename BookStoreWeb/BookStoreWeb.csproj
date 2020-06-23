@@ -402,6 +402,7 @@
     <Content Include="Views\Publisher\_PublisherListPartial.cshtml" />
     <Content Include="Views\Author\Index.cshtml" />
     <Content Include="Views\Author\_AuthorListPartial.cshtml" />
+    <Content Include="Views\Book\_RelatedProductsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

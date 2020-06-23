@@ -38,7 +38,7 @@
                                 </ul>
 
                             </div>
-                         
+
                         }
                         else
                         {
@@ -216,224 +216,38 @@
         </div>
     </div>
 </div>
-<!-- Single Product Area End -->
-<!-- Related Product Area Start -->
+
 <div class="related-product-area">
     <h2 class="section-title">RELATED PRODUCTS</h2>
     <div class="container">
         <div class="row">
             <div class="related-product indicator-style">
-                <div class="col-md-3">
-                    <div class="single-banner" style="width: 200px; padding-left: 23px;">
-                        <div class="product-wrapper">
-                            <a href="#" class="single-banner-image-wrapper">
-                                <img alt="" src="~/Content/Template/img/featured/3.jpg">
-                            </a>
-                            <div class="product-description">
-                                <div class="functional-buttons">
-                                    <a href="#" title="Add to Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                    <a href="#" title="Add to Wishlist">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a>
-                                    <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
-                                        <i class="fa fa-compress"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-bottom text-center">
-                            <div class="banner-bottom-title">
-                                <a href="#">People of the book</a>
-                            </div>
-                            <div class="banner-bottom-author"><a href="#">Yazar adı</a></div>
-                            <div class="banner-bottom-price">18,80 <span><b>₺</b></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-banner" style="width: 200px; padding-left: 23px;">
 
-                        <div class="product-wrapper">
-                            <a href="#" class="single-banner-image-wrapper">
-                                <img alt="" src="~/Content/Template/img/featured/3.jpg">
-                            </a>
-                            <div class="product-description">
-                                <div class="functional-buttons">
-                                    <a href="#" title="Add to Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                    <a href="#" title="Add to Wishlist">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a>
-                                    <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
-                                        <i class="fa fa-compress"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-bottom text-center">
-                            <div class="banner-bottom-title">
-                                <a href="#">People of the book</a>
-                            </div>
-                            <div class="banner-bottom-author"><a href="#">Yazar adı</a></div>
-                            <div class="banner-bottom-price">18,80 <span><b>₺</b></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-banner" style="width: 200px; padding-left: 23px;">
+                @Html.Action("RelatedProducts", "Book", new { categoryId = Model.RelatedCategories.First().Id })
 
-                        <div class="product-wrapper">
-                            <a href="#" class="single-banner-image-wrapper">
-                                <img alt="" src="~/Content/Template/img/featured/3.jpg">
-                            </a>
-                            <div class="product-description">
-                                <div class="functional-buttons">
-                                    <a href="#" title="Add to Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                    <a href="#" title="Add to Wishlist">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a>
-                                    <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
-                                        <i class="fa fa-compress"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-bottom text-center">
-                            <div class="banner-bottom-title">
-                                <a href="#">People of the book</a>
-                            </div>
-                            <div class="banner-bottom-author"><a href="#">Yazar adı</a></div>
-                            <div class="banner-bottom-price">18,80 <span><b>₺</b></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-banner" style="width: 200px; padding-left: 23px;">
-
-                        <div class="product-wrapper">
-                            <a href="#" class="single-banner-image-wrapper">
-                                <img alt="" src="~/Content/Template/img/featured/3.jpg">
-                            </a>
-                            <div class="product-description">
-                                <div class="functional-buttons">
-                                    <a href="#" title="Add to Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                    <a href="#" title="Add to Wishlist">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a>
-                                    <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
-                                        <i class="fa fa-compress"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-bottom text-center">
-                            <div class="banner-bottom-title">
-                                <a href="#">People of the book</a>
-                            </div>
-                            <div class="banner-bottom-author"><a href="#">Yazar adı</a></div>
-                            <div class="banner-bottom-price">18,80 <span><b>₺</b></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-banner" style="width: 200px; padding-left: 23px;">
-
-                        <div class="product-wrapper">
-                            <a href="#" class="single-banner-image-wrapper">
-                                <img alt="" src="~/Content/Template/img/featured/3.jpg">
-                            </a>
-                            <div class="product-description">
-                                <div class="functional-buttons">
-                                    <a href="#" title="Add to Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                    <a href="#" title="Add to Wishlist">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a>
-                                    <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
-                                        <i class="fa fa-compress"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-bottom text-center">
-                            <div class="banner-bottom-title">
-                                <a href="#">People of the book</a>
-                            </div>
-                            <div class="banner-bottom-author"><a href="#">Yazar adı</a></div>
-                            <div class="banner-bottom-price">18,80 <span><b>₺</b></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-banner" style="width: 200px; padding-left: 23px;">
-
-                        <div class="product-wrapper">
-                            <a href="#" class="single-banner-image-wrapper">
-                                <img alt="" src="~/Content/Template/img/featured/3.jpg">
-                            </a>
-                            <div class="product-description">
-                                <div class="functional-buttons">
-                                    <a href="#" title="Add to Cart">
-                                        <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                    <a href="#" title="Add to Wishlist">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a>
-                                    <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
-                                        <i class="fa fa-compress"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-bottom text-center">
-                            <div class="banner-bottom-title">
-                                <a href="#">People of the book</a>
-                            </div>
-                            <div class="banner-bottom-author"><a href="#">Yazar adı</a></div>
-                            <div class="banner-bottom-price">18,80 <span><b>₺</b></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="single-banner" style="width: 200px; padding-left: 23px;">
-
-                        <div class="product-wrapper">
-                            <a href="#" class="single-banner-image-wrapper">
-                                <img alt="" src="~/Content/Template/img/featured/3.jpg">
-                            </a>
-                            <div class="product-description">
-                                <div class="functional-buttons">
-                                    <a href="#" title="Add to Cart">
-                                        <i class="fa fa-shopping-cart">~/C</i>
-                                    </a>
-                                    <a href="#" title="Add to Wishlist">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a>
-                                    <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal">
-                                        <i class="fa fa-compress"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="banner-bottom text-center">
-                            <div class="banner-bottom-title">
-                                <a href="#">People of the book</a>
-                            </div>
-                            <div class="banner-bottom-author"><a href="#">Yazar adı</a></div>
-                            <div class="banner-bottom-price">18,80 <span><b>₺</b></span></div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Related Product Area End -->
+@Bootstrap.ModalPopUp("productModal")
+
+
+<script>
+
+    var bookId = -1;
+
+
+    $(function () {
+        $('#productModal').on('show.bs.modal',
+            function (e) {
+
+                var btn = $(e.relatedTarget);
+
+                bookId = btn.data("book-id");
+                $('#productModal_body').load("/Book/ShowQuickView/" + bookId);
+            }
+        )
+    });
+
+</script>
+

@@ -26,6 +26,7 @@ namespace BusinessLayer.Services.BookService
         IEnumerable<BookListModel> GetBookListForShopPageByAuthorId(int id, int page, int pageSize, string sortBy, out int totalItemCount);
         BookListModel GetQuickViewById(int id);
         BookDetailModel GetBookDetail(int id);
+        IEnumerable<BookListModel> GetRelatedProductsByCategoryId(int categoryId);
         #endregion
     }
 }

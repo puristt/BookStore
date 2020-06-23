@@ -14,6 +14,7 @@ namespace DataAccessLayer.Repository.BookRepository
         IEnumerable<Book> GetAll();
         InsertBookModel GetById(int id);
         BookListModel GetQuickViewById(int id);
+        IEnumerable<BookListModel> GetRelatedProducts(int categoryId);
         Book GetByISBN13(string ISBN);
         int Save(Book entity);
         int SaveBookCategories(string categoryIds, int bookId);

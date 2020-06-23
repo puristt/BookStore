@@ -84,6 +84,10 @@ namespace BusinessLayer.Services.BookService
             var parameters = new { Id = id };
             return _dapperRepository.LoadData<BookDetailModel>("spGetBookDetail", parameters).FirstOrDefault();
         }
+        public IEnumerable<BookListModel> GetRelatedProductsByCategoryId(int categoryId)
+        {
+            return _bookRepository.GetRelatedProducts(categoryId);
+        }
 
         public IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel, int pageNumber, int pageSize, out int totalItemCount)
         {
@@ -180,6 +184,6 @@ namespace BusinessLayer.Services.BookService
             return parameter;
         }
 
-
+       
     }
 }

@@ -158,10 +158,10 @@ namespace BookStoreWeb.Controllers
             return View(model);
         }
 
-        public PartialViewResult RelatedProducts()
+        public PartialViewResult RelatedProducts(int categoryId)
         {
-
-            return PartialView();
+            var model = _bookService.GetRelatedProductsByCategoryId(categoryId);
+            return PartialView("_RelatedProductsPartial", model);
         }
 
 

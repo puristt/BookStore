@@ -1,0 +1,49 @@
+﻿@using Entities.WebViewModels.Book
+
+@model IEnumerable<BookListModel>
+
+
+@if (Model.Any())
+{
+
+    foreach (var item in Model)
+    {
+        <div class="col-md-3 col-sm-6">
+            <div class="single-banner" data-id="@item.Id">
+                <div class="product-wrapper">
+                    <a href="@Url.Action("Detail","Book",new { id = item.Id})" class="single-banner-image-wrapper">
+                        @if (string.IsNullOrEmpty(item.Url))
+                        {
+                            <img alt="" src="~/Images/no_image150x207.jpg" class="text-center">
+                        }
+                        else
+                        {
+                            <img alt="" src="@Url.Content(item?.Url)" width="150" height="180">
+                        }
+                    </a>
+                    <div class="product-description">
+                        <div class="functional-buttons">
+                            <a href="#" title="Add to Cart">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                            <a href="#" title="Add to Wishlist">
+                                <i class="fa fa-heart-o"></i>
+                            </a>
+                            <a href="#" title="Quick view" data-toggle="modal" data-target="#productModal" data-book-id="@item.Id">
+                                <i class="fa fa-compress"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-bottom text-center">
+                    <div class="banner-bottom-title">
+                        <a href="@Url.Action("Detail","Book",new { id = item.Id})">@item.Title</a>
+                    </div>
+                    <div class="banner-bottom-author"><a href="#">@item.AuthorName</a></div>
+                    <div class="banner-bottom-price">@item.Price <span><b>₺</b></span></div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
