@@ -114,16 +114,18 @@ namespace BusinessLayer.Services.BookService
                 return genericModel;
             }
 
-            Book entity = new Book();
-            entity.Title = model.Title;
-            entity.Description = model.Description;
-            entity.PublicationDate = model.PublicationDate;
-            entity.Price = model.Price;
-            entity.ISBN13 = model.ISBN13;
-            entity.Page = model.Page;
-            entity.PublisherId = model.PublisherId;
-            entity.AuthorId = model.AuthorId;
-            entity.Stock = model.Stock;
+            Book entity = new Book
+            {
+                Title = model.Title,
+                Description = model.Description,
+                PublicationDate = model.PublicationDate,
+                Price = model.Price,
+                ISBN13 = model.ISBN13,
+                Page = model.Page,
+                PublisherId = model.PublisherId,
+                AuthorId = model.AuthorId,
+                Stock = model.Stock
+            };
 
             var generatedBookId = _bookRepository.Save(entity);
 
@@ -150,7 +152,6 @@ namespace BusinessLayer.Services.BookService
             return genericModel;
 
         }
-
 
 
         public dynamic GetDynamicSearchModel(SearchModel model)

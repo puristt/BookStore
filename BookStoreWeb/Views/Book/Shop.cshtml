@@ -6,7 +6,9 @@
     ViewBag.Title = "Shop";
 }
 @model StaticPagedList<BookListModel>
-
+@{
+    string actionName = ViewBag.Action ?? "Shop";
+}
 
 <div class="shopping-area section-padding">
     <div class="container">
@@ -42,16 +44,14 @@
                 }
 
                 <div class="">
-                    @Html.PagedListPager(Model, page => Url.Action("Shop", new { searchSortBy = Request.QueryString["searchSortBy"], page = page }))
+                    @Html.PagedListPager(Model, page => Url.Action(actionName, new { searchSortBy = Request.QueryString["searchSortBy"], page = page }))
                 </div>
                 <div class="shop-tab-area">
                     <div class="shop-tab-list">
                         <div class="shop-tab-pill pull-left">
                             @Model.TotalItemCount Ürün Listelenmektedir
                         </div>
-                        @{ 
-                            string actionName = ViewBag.Action ?? "Shop";
-                        }
+
                         @using (Html.BeginForm(actionName, "Book", FormMethod.Get, new { @class = "shop-tab-pill pull-right" }))
                         {
                             <ul>
@@ -67,10 +67,6 @@
                                        new { onchange = "this.form.submit()" })
                                     </div>
                                 </li>
-                                @*<li class="shop-pagination"><a href="#">1</a></li>
-                                    <li class="shop-pagination"><a href="#">2</a></li>
-                                    <li class="shop-pagination"><a href="#"><i class="fa fa-caret-right"></i></a></li>*@
-
                             </ul>
                         }
                     </div>
@@ -108,7 +104,16 @@
                                             </div>
                                             <div class="banner-bottom text-center">
                                                 <div class="banner-bottom-title">
-                                                    <a href="@Url.Action("Detail","Book",new { id = item.Id})">@item.Title</a>
+                                                    <a href="@Url.Action("Detail","Book",new { id = item.Id})">
+                                                        @if (string.IsNullOrEmpty(item.Title) == false && item.Title.Length > 20)
+                                                        {
+                                                            @(item.Title.Substring(0, 15) + "...")
+                                                        }
+                                                        else
+                                                        {
+                                                            @item.Title
+                                                        }
+                                                    </a>
                                                 </div>
                                                 <div class="banner-bottom-author"><a href="#">@item.AuthorName</a></div>
                                                 <div class="banner-bottom-price">@item.Price <span><b>₺</b></span></div>

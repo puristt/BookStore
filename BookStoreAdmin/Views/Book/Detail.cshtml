@@ -66,7 +66,7 @@
                         <div class="form-group ">
                             @Html.LabelFor(model => model.Book.Price, "Fiyat( Orn: 45,99)", htmlAttributes: new { @class = "control-label col-lg-2" })
                             <div class="col-lg-1 col-lg-right-offset">
-                                @Html.TextBoxFor(model => model.Book.Price, null, htmlAttributes: new { @class = "form-control", @min = "1"})
+                                @Html.TextBoxFor(model => model.Book.Price, null, htmlAttributes: new { @class = "form-control", @min = "1" })
                                 @Html.ValidationMessageFor(model => model.Book.Price, "", new { @class = "text-danger" })
                                 @*<input class="form-control " id="password" name="isbn" type="number" />*@
                             </div>
@@ -105,8 +105,8 @@
                             </div>
                             <div id="imgPreview1" class="text-left col-lg-4" style="display:none">
                                 <img width="100" height="157" id="targetImg1" />
-                                    <a href="#" onclick="ClearPreview('#imageBrowse1','#description1','#imgPreview1')"><i class="icon_close_alt2"></i></a>
-                                    <span id="description1"></span>
+                                <a href="#" onclick="ClearPreview('#imageBrowse1','#description1','#imgPreview1')"><i class="icon_close_alt2"></i></a>
+                                <span id="description1"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -135,12 +135,25 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-10">
                                 <button class="btn btn-success" type="submit">Save</button>
                                 <button class="btn btn-default" type="button">Cancel</button>
                             </div>
                         </div>
+                    }
+                    @if (Model.Images.Any())
+                    {
+                        foreach (var item in Model.Images)
+                        {
+                            <div class="form-group">
+                                <div class="text-left">
+                                    <img src="@Url.Content(item.Url)" />
+                                </div>
+                            </div>
+                        }
+
                     }
                 </div>
             </div>
@@ -163,35 +176,35 @@
             $("#imageBrowse1").change(function () {
 
                 var File = this.files;
-                
+
 
                 if (File && File[0]) {
-                    ReadImage(File[0],"#targetImg1","#imgPreview1","#description1");
+                    ReadImage(File[0], "#targetImg1", "#imgPreview1", "#description1");
                 }
                 console.log(File);
             })
-             $("#imageBrowse2").change(function () {
+            $("#imageBrowse2").change(function () {
 
                 var File = this.files;
 
                 if (File && File[0]) {
-                    ReadImage(File[0],"#targetImg2","#imgPreview2","#description2");
+                    ReadImage(File[0], "#targetImg2", "#imgPreview2", "#description2");
                 }
-                 console.log(File);
-             })
-             $("#imageBrowse3").change(function () {
+                console.log(File);
+            })
+            $("#imageBrowse3").change(function () {
 
                 var File = this.files;
 
                 if (File && File[0]) {
-                    ReadImage(File[0],"#targetImg3","#imgPreview3","#description3");
+                    ReadImage(File[0], "#targetImg3", "#imgPreview3", "#description3");
                 }
-                 console.log(File);
-             })
+                console.log(File);
+            })
 
         })
 
-        var ReadImage = function (file,targetImg,imagePreview,description) {
+        var ReadImage = function (file, targetImg, imagePreview, description) {
 
             var reader = new FileReader;
             var image = new Image;
@@ -214,7 +227,7 @@
             }
         }
 
-        var ClearPreview = function (imgBrowse,description,imgPreview) {
+        var ClearPreview = function (imgBrowse, description, imgPreview) {
             $(imgBrowse).val('');
             $(description).text('');
             $(imgPreview).hide();

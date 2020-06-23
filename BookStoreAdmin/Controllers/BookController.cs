@@ -61,17 +61,18 @@ namespace BookStoreAdmin.Controllers
         [HttpPost]
         public ActionResult Detail(InsertBookViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
+            PrepareInsertModel(model);
+
             if (model.Book.CategoryIds == null)
             {
                 ModelState.AddModelError("", "Lütfen Kategori Seçiniz!");
                 return View(model);
             }
-
-            PrepareInsertModel(model);
+            
 
             if (ModelState.IsValid)
             {
-                
+                //TODO : Güncelleme işlemini yap
                 var urlList = SaveImagesAndSetUrl(files, model.Book);
                 var result = _bookService.SaveModel(model.Book, urlList);
                 if(result.Errors.Count > 0)
@@ -83,11 +84,11 @@ namespace BookStoreAdmin.Controllers
                 if (model.Book.Id == default) TempData["Success"] = "Yeni Kitap Başarıyla Eklendi! Kitap Listesine Yönlendiriliyorsunuz...";
                 else TempData["Success"] = "Kitap Başarıyla Güncellendi! Kitap Listesine Yönlendiriliyorsunuz...";
                 ModelState.Clear();
-                return View();
+                return View(model);
             }
 
 
-
+            
 
             return View(model);
         }
