@@ -9,6 +9,7 @@ using Entities.AdminViewModels.Book;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -68,31 +69,30 @@ namespace BookStoreAdmin.Controllers
                 ModelState.AddModelError("", "Lütfen Kategori Seçiniz!");
                 return View(model);
             }
-            
+
 
             if (ModelState.IsValid)
             {
                 //TODO : Güncelleme işlemini yap
                 var urlList = SaveImagesAndSetUrl(files, model.Book);
                 var result = _bookService.SaveModel(model.Book, urlList);
-                if(result.Errors.Count > 0)
+                if (result.Errors.Count > 0)
                 {
                     result.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
                     return View(model);
                 }
 
-                if (model.Book.Id == default) TempData["Success"] = "Yeni Kitap Başarıyla Eklendi! Kitap Listesine Yönlendiriliyorsunuz...";
+                if (model.Book.Id == default) TempData["Success"] = "Yeni Kitap Başarıyla Eklendi!";
                 else TempData["Success"] = "Kitap Başarıyla Güncellendi! Kitap Listesine Yönlendiriliyorsunuz...";
                 ModelState.Clear();
-                return View(model);
+                return RedirectToAction("Detail");
             }
 
 
-            
+
 
             return View(model);
         }
-
 
 
         public PartialViewResult LoadFilteredResults(SearchModel filter, int page = 1)
@@ -104,6 +104,18 @@ namespace BookStoreAdmin.Controllers
             model.CurrentPageNumber = page;
 
             return PartialView("_BookListPartial", model);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            bool deleteResult = _bookService.DeleteBook(id.Value);
+
+            return Json(new { result = deleteResult }, JsonRequestBehavior.AllowGet);
         }
 
         private List<string> SaveImagesAndSetUrl(IEnumerable<HttpPostedFileBase> files, InsertBookModel model)

@@ -17,6 +17,7 @@ namespace DataAccessLayer.Repository.BookRepository
         IEnumerable<BookListModel> GetRelatedProducts(int categoryId);
         Book GetByISBN13(string ISBN);
         int Save(Book entity);
+        int Delete(int id);
         int SaveBookCategories(string categoryIds, int bookId);
         int CountByPublisherId(int publisherId);
         int CountByAuthorId(int authorId);

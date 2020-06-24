@@ -37,6 +37,12 @@ namespace DataAccessLayer.Repository.BookRepository
             return _repository.Count(parameters);
         }
 
+        public int Delete(int id)
+        {
+            var parameters = new { Id = id };
+            return _repository.SaveData<Book>("spDeleteBook", parameters);
+        }
+
         public IEnumerable<Book> GetAll()
         {
             throw new NotImplementedException();

@@ -1,4 +1,4 @@
-﻿
+﻿var itemId = -1;
 var selectorTop = '.pagination-list-top li';
 var selectorBottom = '.pagination-list-bottom li';
 
@@ -39,10 +39,39 @@ $(function () {
         });
 
     });
+    $('#confirmModal').on('show.bs.modal',
+        function (e) {
 
+            var btn = $(e.relatedTarget);
+
+            itemId = btn.data("book-id");
+        });
 
 
 });
+
+
+var DeleteBook = function () {
+
+    $.ajax({
+        type: "POST",
+        url: "/Book/Delete",
+        data: { "id": itemId }
+    }).done(function (data) {
+        $('#confirmModal').modal('hide');
+        if (data.result) {
+            $('#successModal').modal('show');
+            $("#bookList").load("/Book/LoadFilteredResults");
+        } else {
+            $('#errorModal_body').remove('.error-message');
+            $('#errorModal_body').append("<p class='error-message'>Silerken bir hata oluştu. Lütfen tekrar deneyiniz!</p>");
+            $('#errorModal').modal('show');
+        }
+
+    });
+}
+
+
 
 function paging(val) {
 

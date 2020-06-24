@@ -13,5 +13,6 @@ namespace Entities
         AuthorAlreadyExists = 102,
         PublisherAlreadyExists = 103,
         BookAlreadyExists = 104,
+        WrongFormat = 105,
     }
 }

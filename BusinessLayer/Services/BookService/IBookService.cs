@@ -16,6 +16,7 @@ namespace BusinessLayer.Services.BookService
         IEnumerable<FilteredBookListModel> GetFilteredBookList(SearchModel searchModel, int pageNumber, int pageSize, out int totalItemCount);
         GenericResults<InsertBookModel> SaveModel(InsertBookModel model, List<string> imageUrls);
         InsertBookModel GetBookById(int id);
+        bool DeleteBook(int id);
         #endregion
 
 

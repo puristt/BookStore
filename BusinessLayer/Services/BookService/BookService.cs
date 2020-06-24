@@ -103,6 +103,16 @@ namespace BusinessLayer.Services.BookService
 
             return bookList;
         }
+
+        public bool DeleteBook(int id)
+        {
+            int  result = _bookRepository.Delete(id);
+            if (result == 0)
+                return false;
+
+            return true;
+        }
+
         public GenericResults<InsertBookModel> SaveModel(InsertBookModel model, List<string> imageUrls)
         {
             var db_book = _bookRepository.GetByISBN13(model.ISBN13);
@@ -111,6 +121,13 @@ namespace BusinessLayer.Services.BookService
             if (db_book != null)
             {
                 genericModel.AddError(ErrorMessageCode.BookAlreadyExists, "ISBN13 Numarası zaten daha önce kayıt edilmiş!");
+                return genericModel;
+            }
+
+            var IsbnCheck = IsDigitsOnly(model.ISBN13);
+            if ((!IsbnCheck) || model.ISBN13.Length != 13)
+            {
+                genericModel.AddError(ErrorMessageCode.WrongFormat, "ISBN13 Barkod numarası sadece rakam içermesi gerekir ve 13 rakamdan oluşmalıdır");
                 return genericModel;
             }
 
@@ -126,27 +143,22 @@ namespace BusinessLayer.Services.BookService
                 AuthorId = model.AuthorId,
                 Stock = model.Stock
             };
-
             var generatedBookId = _bookRepository.Save(entity);
-
             if (generatedBookId == 0)
             {
-                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir hata oluştu. Lütfen Tekrar Deneyiniz!");
+                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir Hata oluştu. Lütfen tekrar deneyiniz!");
+                return genericModel;
             }
 
-            var urls = string.Join(",", imageUrls);
-            int imageResult = _bookImageRepository.SaveImagesByBookId(urls, generatedBookId);
-            if (imageResult == 0)
-            {
-                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir hata oluştu. Lütfen Tekrar Deneyiniz!");
-            }
+            int imageResult = this.InsertBookImages(imageUrls, generatedBookId);
+
 
             var bookCategories = string.Join(",", model.CategoryIds);
-
             int categoryResult = _bookRepository.SaveBookCategories(bookCategories, generatedBookId);
-            if (categoryResult == 0)
+            if (imageResult == 0 || categoryResult == 0)
             {
-                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir hata oluştu. Lütfen Tekrar Deneyiniz!");
+                genericModel.AddError(ErrorMessageCode.SomethingWentWrong, "Bir Hata oluştu. Lütfen tekrar deneyiniz!");
+                return genericModel;
             }
 
             return genericModel;
@@ -185,6 +197,26 @@ namespace BusinessLayer.Services.BookService
             return parameter;
         }
 
-       
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+
+            return true;
+        }
+        int InsertBookImages(List<string> imageUrls, int bookId)
+        {
+
+            if (!imageUrls.Any())
+                return -1;
+
+            var urls = string.Join(",", imageUrls);
+
+            return  _bookImageRepository.SaveImagesByBookId(urls, bookId);
+        }
+
     }
 }

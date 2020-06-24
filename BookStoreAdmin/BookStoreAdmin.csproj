@@ -754,7 +754,7 @@
     <Content Include="App_Code\Bootstrap.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
-    <Content Include="Scripts\FilterScripts.js" />
+    <Content Include="Scripts\BookScripts.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
