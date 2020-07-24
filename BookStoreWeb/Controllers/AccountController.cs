@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BookStoreWeb.Models;
+using BusinessLayer.Services.UserService;
+using Entities.DataModels;
+using System.Web.Security;
 
 namespace BookStoreWeb.Controllers
 {
@@ -17,9 +20,10 @@ namespace BookStoreWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
-        public AccountController()
+        private readonly IUserService _userService;
+        public AccountController(IUserService userService)
         {
+            _userService = userService;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -72,6 +76,7 @@ namespace BookStoreWeb.Controllers
             {
                 return View(model);
             }
+
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -153,8 +158,18 @@ namespace BookStoreWeb.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var dapperUser = new User
                 {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email
+                };
+
+                var dapperResult = _userService.SaveUser(dapperUser);
+
+                if (result.Succeeded && dapperResult == -1)
+                {
+                   
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -171,7 +186,7 @@ namespace BookStoreWeb.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -387,8 +402,6 @@ namespace BookStoreWeb.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);

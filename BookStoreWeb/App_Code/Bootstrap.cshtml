@@ -18,3 +18,28 @@
     </div>
 
 }
+
+@helper NotAuthenticatedModal(string id = "")
+{
+    <div class="modal fade bd-example-modal-sm" id="@id" tabindex="-1" role="dialog" aria-labelledby="@(id + "_label")" aria-hidden="true">
+        <div class="modal-dialog" style="width:550px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="@(id + "_header")">
+                    <div style="text-align:center;">
+                        <img src="~/Images/64px-Warning.svg.png" />
+                    </div>
+                </div>
+                <div class="modal-body" id="@(id + "_body")">
+                    <p class="error-message">
+                        Ürünü sepete eklemek için giriş yapmanız gerekiyor!
+                    </p>
+                </div>
+                <div class="modal-footer" id="@(id + "_footer")">
+                    <a href="/Account/Login" class="btn btn-default">Giriş yap</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

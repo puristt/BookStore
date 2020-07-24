@@ -56,6 +56,10 @@
     <Compile Include="Services\PublisherService\PublisherService.cs" />
     <Compile Include="Services\ReviewService\IReviewService.cs" />
     <Compile Include="Services\ReviewService\ReviewService.cs" />
+    <Compile Include="Services\ShoppingCartService\IShoppingCartService.cs" />
+    <Compile Include="Services\ShoppingCartService\ShoppingCartService.cs" />
+    <Compile Include="Services\UserService\IUserService.cs" />
+    <Compile Include="Services\UserService\UserService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

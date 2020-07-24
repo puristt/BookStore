@@ -42,20 +42,20 @@ namespace BookStoreWeb.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "E-posta")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "E-posta")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Parola")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -66,18 +66,18 @@ namespace BookStoreWeb.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "E-posta")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} en az {2} karakter uzunluğunda olmalıdır.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Parola")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Parola Tekrar")]
+        [Compare("Password", ErrorMessage = "Parolalar uyuşmuyor.")]
         public string ConfirmPassword { get; set; }
     }
 

@@ -113,7 +113,7 @@
                 data: { "id": itemId }
             }).done(function (data) {
                 $('#confirmModal').modal('hide');
-                if (data.result) {
+                if (data.result == true) {
                     $('#successModal').modal('show');
                     $("#categoryList").load("/Category/LoadCategoryList");
                 } else {

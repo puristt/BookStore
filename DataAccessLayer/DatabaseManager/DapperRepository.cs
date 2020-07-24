@@ -13,7 +13,7 @@ namespace DataAccessLayer.DatabaseManager
 {
     public class DapperRepository<T> : IDapperRepository<T> where T : class
     {
-        public string GetConnectionString()
+        private string GetConnectionString()
         {
             return ConfigurationManager.ConnectionStrings["BookStore"].ConnectionString;
         }

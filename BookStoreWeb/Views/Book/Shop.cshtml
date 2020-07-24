@@ -90,7 +90,7 @@
                                                 </a>
                                                 <div class="product-description">
                                                     <div class="functional-buttons">
-                                                        <a href="#" title="Add to Cart">
+                                                        <a href="javascript:;" onclick="AddToShoppingCart(@item.Id)" data-toggle="modal" data-target="#priceAlarmModal" title="Add to Cart">
                                                             <i class="fa fa-shopping-cart"></i>
                                                         </a>
                                                         <a href="#" title="Add to Wishlist">
@@ -104,7 +104,7 @@
                                             </div>
                                             <div class="banner-bottom text-center">
                                                 <div class="banner-bottom-title">
-                                                    <a href="@Url.Action("Detail","Book",new { id = item.Id})">
+                                                    <a href="@Url.Action("Detail","Book", new { id = item.Id})">
                                                         @if (string.IsNullOrEmpty(item.Title) == false && item.Title.Length > 20)
                                                         {
                                                             @(item.Title.Substring(0, 15) + "...")
@@ -115,7 +115,7 @@
                                                         }
                                                     </a>
                                                 </div>
-                                                <div class="banner-bottom-author"><a href="#">@item.AuthorName</a></div>
+                                                <div class="banner-bottom-author"><a href="@Url.Action("Author","Book", new { id = item.AuthorId})">@item.AuthorName</a></div>
                                                 <div class="banner-bottom-price">@item.Price <span><b>₺</b></span></div>
                                             </div>
                                         </div>
@@ -131,7 +131,7 @@
 </div>
 
 @Bootstrap.ModalPopUp("productModal")
-
+@Bootstrap.NotAuthenticatedModal("priceAlarmModal")
 
 <script>
 
@@ -149,6 +149,28 @@
             }
         )
     });
+
+    var AddToShoppingCart = function (id) {
+
+        $.ajax({
+            type: "POST",
+            url: "/ShoppingCart/AddToCart",
+            data: { productId: id },
+            success: function (data) {
+                if (data.result == false) {
+                    $('#priceAlarmModal').modal('show');
+                }
+                if (data.result == true) {
+                    function myFunction() {
+                        alert("Hello! I am an alert box!");
+                    }
+                    console.log("işlem tamamdır abisi");
+                }
+
+            }
+
+        })
+    }
 
 </script>
 

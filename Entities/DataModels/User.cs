@@ -8,7 +8,7 @@ namespace Entities.DataModels
 {
     public class User
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -16,7 +16,7 @@ namespace Entities.DataModels
         public string PhoneNumber { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public List<Review> Reviews { get; set; } //Review Table
-        public List<Book> FavoriteBooks { get; set; } //Book Table
+        //public List<Review> Reviews { get; set; } //Review Table
+        //public List<Book> FavoriteBooks { get; set; } //Book Table
     }
 }

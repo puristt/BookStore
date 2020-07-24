@@ -63,6 +63,12 @@
     <Compile Include="Repository\PublisherRepository\PublisherRepository.cs" />
     <Compile Include="Repository\ReviewRepository\IReviewRepository.cs" />
     <Compile Include="Repository\ReviewRepository\ReviewRepository.cs" />
+    <Compile Include="Repository\ShoppingCartRepository\CartItemRepository.cs" />
+    <Compile Include="Repository\ShoppingCartRepository\ICartItemRepository.cs" />
+    <Compile Include="Repository\ShoppingCartRepository\IShoppingCartRepository.cs" />
+    <Compile Include="Repository\ShoppingCartRepository\ShoppingCartRepository.cs" />
+    <Compile Include="Repository\UserRepository\IUserRepository.cs" />
+    <Compile Include="Repository\UserRepository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
