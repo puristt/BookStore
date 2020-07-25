@@ -83,6 +83,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebViewModels\Book\BookDetailModel.cs" />
     <Compile Include="WebViewModels\Book\BookListModel.cs" />
+    <Compile Include="WebViewModels\CartItem\CartItemModel.cs" />
     <Compile Include="WebViewModels\Category\CategoryListModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,8 @@
-﻿
+﻿@using Entities.WebViewModels.CartItem
 
-<!-- Breadcrumbs Area Start -->
-<!-- Cart Area Start -->
+@model IEnumerable<CartItemModel>
+
+
 <div class="shopping-cart-area section-padding">
     <div class="container">
         <div class="row">
@@ -19,63 +20,47 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="product-remove">
-                                    <a href="#">
-                                        <i class="flaticon-delete"></i>
-                                    </a>
-                                </td>
-                                <td class="product-image">
-                                    <a href="#">
-                                        <img src="~/Images/no_image150x207.jpg" />
-                                    </a>
-                                </td>
-                                <td class="t-product-name">
-                                    <h3>
-                                        <a href="#">Cold mountain</a>
-                                    </h3>
-                                </td>
-                                <td class="product-unit-price">
-                                    <p>$ 100</p>
-                                </td>
-                                <td class="product-quantity product-cart-details">
-                                    <input type="number" value="1">
-                                </td>
-                                <td class="product-quantity">
-                                    <p>$ 100</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="product-remove">
-                                    <a href="#">
-                                        <i class="flaticon-delete"></i>
-                                    </a>
-                                </td>
-                                <td class="product-image">
-                                    <a href="#">
-                                        <img src="~/Images/no_image150x207.jpg" />
-                                    </a>
-                                </td>
-                                <td class="t-product-name">
-                                    <h3>
-                                        <a href="#">East of eden</a>
-                                    </h3>
-                                </td>
-                                <td class="product-unit-price">
-                                    <p>$ 100</p>
-                                </td>
-                                <td class="product-quantity product-cart-details">
-                                    <input type="number" value="1">
-                                </td>
-                                <td class="product-quantity">
-                                    <p>$ 100</p>
-                                </td>
-                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="product-remove">
+                                        <a href="#">
+                                            <i class="flaticon-delete"></i>
+                                        </a>
+                                    </td>
+                                    <td class="product-image">
+                                        <a href="#">
+                                            @if (string.IsNullOrEmpty(item.BookImageUrl))
+                                            {
+                                                <img alt="" src="~/Images/no_image150x207.jpg">
+                                            }
+                                            else
+                                            {
+                                                <img alt="" src="@Url.Content(item?.BookImageUrl)" width="150" height="180">
+                                            }
+                                        </a>
+                                    </td>
+                                    <td class="t-product-name">
+                                        <h3>
+                                            <a href="#">@item.BookTitle</a>
+                                        </h3>
+                                    </td>
+                                    <td class="product-unit-price">
+                                        <p>@item.UnitPrice<span><b>₺</b></span></p>
+                                    </td>
+                                    <td class="product-quantity product-cart-details">
+                                        <input type="number" value="@item.Quantity" min="1" max="50">
+                                    </td>
+                                    <td class="product-quantity">
+                                        <p>@item.Subtotal<span><b>₺</b></span></p>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
                 <div class="shopingcart-bottom-area">
-                    <a class="left-shoping-cart" href="#">CONTINUE SHOPPING</a>
+                    <a class="left-shoping-cart" href="@Url.Action("Shop","Book")">CONTINUE SHOPPING</a>
                     <div class="shopingcart-bottom-area pull-right">
                         <a class="right-shoping-cart" href="#">CLEAR SHOPPING CART</a>
                         <a class="right-shoping-cart" href="#">UPDATE SHOPPING CART</a>
@@ -85,8 +70,7 @@
         </div>
     </div>
 </div>
-<!-- Cart Area End -->
-<!-- Discount Area Start -->
+
 <div class="discount-area">
     <div class="container">
         <div class="row">
@@ -95,16 +79,13 @@
             <div class="col-md-6 col-sm-6">
                 <div class="subtotal-main-area">
                     <div class="subtotal-area">
-                        <h2>SUBTOTAL<span>$ 200</span></h2>
-                    </div>
-                    <div class="subtotal-area">
-                        <h2>GRAND TOTAL<span>$ 200</span></h2>
+                        <h2>GRAND TOTAL 
+                        <span><b>@(ViewBag.GrandTotal) ₺</b></span>
+                        </h2>
                     </div>
                     <a href="#">CHECKOUT</a>
-                    <p>Checkout With Multiple Addresses</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Discount Area End -->	

@@ -1,8 +1,7 @@
-﻿
-
-using DataAccessLayer.DatabaseManager;
-using DataAccessLayer.Repository.ShoppingCartRepository;
+﻿using DataAccessLayer.Repository.ShoppingCartRepository;
 using Entities.DataModels;
+using Entities.WebViewModels.CartItem;
+using System.Collections.Generic;
 
 namespace BusinessLayer.Services.ShoppingCartService
 {
@@ -24,6 +23,18 @@ namespace BusinessLayer.Services.ShoppingCartService
 
             return result;
 
+        }
+
+        public IEnumerable<CartItemModel> GetCartItems(int shoppingCartId)
+        {
+            var cartItems = _cartItemRepository.GetCartItemsByShoppingCartId(shoppingCartId);
+
+            foreach (var item in cartItems)
+            {
+                item.Subtotal = (item.Quantity * item.UnitPrice);
+            }
+
+            return cartItems;
         }
 
         public int GetShoppingCartId(string userId)

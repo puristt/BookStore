@@ -18,7 +18,14 @@ namespace BookStoreWeb.Controllers
 
         public ActionResult MyCart()
         {
-            return View();
+            var shoppingCartId = _shoppingCartService.GetShoppingCartId(User.Identity.GetUserId());
+
+            var cartItems = _shoppingCartService.GetCartItems(shoppingCartId);
+
+            var totalAmount = cartItems.Sum(x => x.Subtotal);
+            ViewBag.GrandTotal = totalAmount;
+
+            return View(cartItems);
         }
 
         public ActionResult AddToCart(int productId, int quantity = 1)

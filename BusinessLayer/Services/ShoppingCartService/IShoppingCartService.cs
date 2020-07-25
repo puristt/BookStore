@@ -1,6 +1,8 @@
 ﻿
 
 using Entities.DataModels;
+using Entities.WebViewModels.CartItem;
+using System.Collections.Generic;
 
 namespace BusinessLayer.Services.ShoppingCartService
 {
@@ -8,5 +10,6 @@ namespace BusinessLayer.Services.ShoppingCartService
     {
         int GetShoppingCartId(string userId);
         int AddItemToCart(int productId, int shoppingCartId,int quantity);
+        IEnumerable<CartItemModel> GetCartItems(int shoppingCartId);
     }
 }

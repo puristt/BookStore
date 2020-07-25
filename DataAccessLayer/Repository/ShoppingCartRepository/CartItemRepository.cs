@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.DatabaseManager;
 using Entities.DataModels;
+using Entities.WebViewModels.CartItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,11 @@ namespace DataAccessLayer.Repository.ShoppingCartRepository
         {
             var parameters = new { BookId = bookId, ShoppingCartId = shoppingCartId };
             return _repository.LoadData("spGetCartItemByBookAndCartId", parameters).FirstOrDefault();
+        }
+
+        public IEnumerable<CartItemModel> GetCartItemsByShoppingCartId(int shoppingCartId)
+        {
+            return _repository.LoadData<CartItemModel>("spGetCartItemsByShoppingCartId", new { ShoppingCartId = shoppingCartId });
         }
 
         public int SaveModel(CartItem entity)

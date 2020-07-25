@@ -43,3 +43,28 @@
     </div>
 
 }
+
+@helper SuccessfullyAddedModal(string id = "")
+{
+    <div class="modal fade bd-example-modal-sm" id="@id" tabindex="-1" role="dialog" aria-labelledby="@(id + "_label")" aria-hidden="true">
+        <div class="modal-dialog" style="width:550px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="@(id + "_header")">
+                    <div style="text-align:center;">
+                        <img src="~/Images/64px-Warning.svg.png" />
+                    </div>
+                </div>
+                <div class="modal-body" id="@(id + "_body")">
+                    <p class="error-message">
+                        Ürünü başarıyla sepete eklendi
+                    </p>
+                </div>
+                <div class="modal-footer" id="@(id + "_footer")">
+                    <a href="/ShoppingCart/MyCart" class="btn btn-default">Sepete git</a>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Alışverişe devam et</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

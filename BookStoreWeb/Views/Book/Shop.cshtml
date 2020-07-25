@@ -90,7 +90,7 @@
                                                 </a>
                                                 <div class="product-description">
                                                     <div class="functional-buttons">
-                                                        <a href="javascript:;" onclick="AddToShoppingCart(@item.Id)" data-toggle="modal" data-target="#priceAlarmModal" title="Add to Cart">
+                                                        <a href="#" onclick='AddToShoppingCart(@item.Id)' title="Add to Cart">
                                                             <i class="fa fa-shopping-cart"></i>
                                                         </a>
                                                         <a href="#" title="Add to Wishlist">
@@ -132,45 +132,44 @@
 
 @Bootstrap.ModalPopUp("productModal")
 @Bootstrap.NotAuthenticatedModal("priceAlarmModal")
-
-<script>
-
-    var bookId = -1;
+@Bootstrap.SuccessfullyAddedModal("successModal")
 
 
-    $(function () {
-        $('#productModal').on('show.bs.modal',
-            function (e) {
+    <script>
 
-                var btn = $(e.relatedTarget);
+        var bookId = -1;
 
-                bookId = btn.data("book-id");
-                $('#productModal_body').load("/Book/ShowQuickView/" + bookId);
-            }
-        )
-    });
 
-    var AddToShoppingCart = function (id) {
+        $(function () {
+            $('#productModal').on('show.bs.modal',
+                function (e) {
 
-        $.ajax({
-            type: "POST",
-            url: "/ShoppingCart/AddToCart",
-            data: { productId: id },
-            success: function (data) {
-                if (data.result == false) {
-                    $('#priceAlarmModal').modal('show');
+                    var btn = $(e.relatedTarget);
+
+                    bookId = btn.data("book-id");
+                    $('#productModal_body').load("/Book/ShowQuickView/" + bookId);
                 }
-                if (data.result == true) {
-                    function myFunction() {
-                        alert("Hello! I am an alert box!");
+            )
+        });
+
+        function AddToShoppingCart(id) {
+
+            $.ajax({
+                type: "POST",
+                url: "/ShoppingCart/AddToCart",
+                data: { productId: id },
+                success: function (data) {
+                    if (data.result == true) {
+                        $('#successModal').modal('show');
+                    } else {
+                        $('#priceAlarmModal').modal('show');
                     }
-                    console.log("işlem tamamdır abisi");
                 }
 
-            }
+            })
+        }
 
-        })
-    }
+    </script>
 
-</script>
+
 
