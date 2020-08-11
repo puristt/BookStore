@@ -18,6 +18,11 @@ namespace BookStoreWeb.Controllers
 
         public ActionResult MyCart()
         {
+            if(User.Identity.GetUserId() == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var shoppingCartId = _shoppingCartService.GetShoppingCartId(User.Identity.GetUserId());
 
             var cartItems = _shoppingCartService.GetCartItems(shoppingCartId);
